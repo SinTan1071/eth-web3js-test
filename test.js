@@ -70,15 +70,15 @@ async function send(contractAddr, methodName, ...params) {
 }
 
 async function Benchmark() {
-    // let loop = 10
+    let loop = 10
     /*secp256k1*/ //19s260ms 27ms
-    // let startTime = new Date();
-    // for (let i = 0; i < loop; i++) {
-    //     // await web3.eth.personal.sign('你好 sintan1071 ！' + i, _from, _pass).then(sig=>{console.log('/*secp256k1*/ sign: ', sig)})
-    //     await web3.eth.personal.ecRecover('0x1147174232333666114717423233366611471742323336661147174232333666', '0x8b9012ff364438c8fc750608e0968ed47f844f3a378aab089e758d59149e33b861208eba2d374a3df544c376b8131e675c98f2d4237e2cba50a7c767a6892d131b').then(addr=>{console.log('/*secp256k1*/ ecrecover: ', addr)}) // secp256k1
-    // }
-    // let stopTime = new Date();
-    // console.log('/*secp256k1*/签名'+ loop +'次时间: ', formatSeconds(stopTime - startTime))
+    let startTime = new Date();
+    for (let i = 0; i < loop; i++) {
+        await web3.eth.personal.sign('你好 sintan1071 ！' + i, _from, _pass).then(sig=>{console.log('/*secp256k1*/ sign: ', sig)})
+        // await web3.eth.personal.ecRecover('0x1147174232333666114717423233366611471742323336661147174232333666', '0x8b9012ff364438c8fc750608e0968ed47f844f3a378aab089e758d59149e33b861208eba2d374a3df544c376b8131e675c98f2d4237e2cba50a7c767a6892d131b').then(addr=>{console.log('/*secp256k1*/ ecrecover: ', addr)}) // secp256k1
+    }
+    let stopTime = new Date();
+    console.log('/*secp256k1*/签名'+ loop +'次时间: ', formatSeconds(stopTime - startTime))
     /*sm2p256v1*/ //1s836ms 17ms
     // let startTime = new Date();
     // for (let i = 0; i < loop; i++) {
