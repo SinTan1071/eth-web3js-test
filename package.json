@@ -9,6 +9,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "web3": "^1.2.7"
+    "fs": "0.0.1-security",
+    "web3": "2.0.0-alpha.1"
   }
 }
