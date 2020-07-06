@@ -9,13 +9,17 @@ const Web3 = require('web3');
 // const contractJson = require('./f_add_strimgM.json');
 // const contractJson = require('./float.json');
 // const contractJson = require('./time.json');
-const plContractJson = require('./ProjectList.json');
-const abfContractJson = require('./AssetBookerFactory.json');
-const abContractJson = require('./AssetBooker.json');
+const plContractJson = require('./TreeBox/ProjectList.json');
+const abfContractJson = require('./TreeBox/AssetBookerFactory.json');
+const abContractJson = require('./TreeBox/AssetBooker.json');
 
 const ccContractJson = require('./ContractsCalls/main.json');
 const aContractJson = require('./ContractsCalls/a.json');
 const bContractJson = require('./ContractsCalls/b.json');
+
+const sid = require('./TreeBox/StandardIDType.json');
+const sidv1 = require('./TreeBox/StandardIDType_V1.json');
+const sidv2 = require('./TreeBox/StandardIDType_V2.json');
 
 const web3 = new Web3('http://localhost:1723');
 // const _from = '0x7eff122b94897ea5b0e2a9abf47b86337fafebdc'; // secp256k1
@@ -46,7 +50,7 @@ async function deploy(contractJson) {
         return newContractInst.options.address;
     })
     .catch(e => {
-        console.error(e);
+        console.error(e.toString('utf8'));
     });
     console.log("deploy address: ", address);
     return address;
@@ -64,7 +68,7 @@ async function call(contractAddr, contractJson, methodName, ...params) {
         return result;
     })
     .catch(e => {
-        console.error(e);
+        console.error(e.toString('utf8'));
     });
     console.log("call result: ", result);
     return result;
@@ -169,8 +173,11 @@ unlock().then(()=> {
 // 测试大型oz项目的TreeBox
 // TreeBoxTest()
 
-// 测试大型oz项目的TreeBox
-ContractsCallsTest()
+// 测试合约之间互相调用的原子性
+// ContractsCallsTest()
+
+// 测试通过自己写的solintan的以太坊合约管理系统的oz的合约升级
+UpgradeTest()
 /******************************************↑↑↑测试区域↑↑↑*****************************************************/
 })
 
@@ -240,6 +247,28 @@ async function ContractsCallsTest() {
     await send(ccAddr, ccContractJson, 'set', aAddr, '23333', bAddr, 666);
     await call(aAddr, aContractJson, 'get');   
     await call(bAddr, bContractJson, 'get');   
+}
+
+async function UpgradeTest() {
+    const addr = '0xcB1B962Ac974D7d8880D3226626992dF16Fc7624';
+    // owner
+    // await call(addr, sid, 'owner');
+    // v0
+    // await send(addr, sid, 'setUserIdType', '居民身份证');
+    // await call(addr, sid, 'getUserIdType', '居民身份证');
+    // v1   
+    // await send(addr, sidv1, 'setUserIdType', '护照');
+    // await call(addr, sidv1, 'getUserIdType', '居民身份证');
+    // await call(addr, sidv1, 'getUserIdType', '护照');
+    // await send(addr, sidv1, 'setTest1', 111);
+    // await call(addr, sidv1, 'v1');
+    // v2
+    // await send(addr, sidv2, 'setUserIdType', '企业税号');
+    // await call(addr, sidv2, 'getUserIdType', '居民身份证');
+    // await call(addr, sidv2, 'getUserIdType', '护照');
+    // await call(addr, sidv2, 'getUserIdType', '企业税号');
+    // await send(addr, sidv2, 'setTest2', 222);
+    // await call(addr, sidv2, 'v2');
 }
 
 /*******************************************
