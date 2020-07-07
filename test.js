@@ -20,6 +20,7 @@ const bContractJson = require('./ContractsCalls/b.json');
 const sid = require('./TreeBox/StandardIDType.json');
 const sidv1 = require('./TreeBox/StandardIDType_V1.json');
 const sidv2 = require('./TreeBox/StandardIDType_V2.json');
+const sidv3 = require('./TreeBox/StandardIDType_V3.json');
 
 const web3 = new Web3('http://localhost:1723');
 // const _from = '0x7eff122b94897ea5b0e2a9abf47b86337fafebdc'; // secp256k1
@@ -269,6 +270,14 @@ async function UpgradeTest() {
     // await call(addr, sidv2, 'getUserIdType', '企业税号');
     // await send(addr, sidv2, 'setTest2', 222);
     // await call(addr, sidv2, 'v2');
+    // v3
+    await send(addr, sidv3, 'setUserIdType', '机器码');
+    await call(addr, sidv3, 'getUserIdType', '居民身份证');
+    await call(addr, sidv3, 'getUserIdType', '护照');
+    await call(addr, sidv3, 'getUserIdType', '企业税号');
+    await call(addr, sidv3, 'getUserIdType', '机器码');
+    // await send(addr, sidv3, 'setTest3', TODO);
+    await call(addr, sidv3, 'v3');
 }
 
 /*******************************************
