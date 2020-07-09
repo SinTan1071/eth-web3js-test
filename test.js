@@ -22,13 +22,15 @@ const sidv1 = require('./TreeBox/StandardIDType_V1.json');
 const sidv2 = require('./TreeBox/StandardIDType_V2.json');
 const sidv3 = require('./TreeBox/StandardIDType_V3.json');
 
-const web3 = new Web3('http://localhost:1723');
-// const _from = '0x7eff122b94897ea5b0e2a9abf47b86337fafebdc'; // secp256k1
-// const _pass = "1234";
+const tb = require('./TreeBox/TreeBox.json');
+
+const web3 = new Web3('http://localhost:8545');
+const _from = '0x7eff122b94897ea5b0e2a9abf47b86337fafebdc'; // secp256k1
+const _pass = "1234";
 // const _from = '6EB0CD3B7046B6712E55309FA1D0A5B5A9883687'; // sm2p256v1
 // const _pass = "12345";
-const _from = '0x5bE6Bbe4428B6fE3d2F2c0f3984BC41Ad94f4E8d';
-const _pass = '';
+// const _from = '0x5bE6Bbe4428B6fE3d2F2c0f3984BC41Ad94f4E8d';
+// const _pass = '';
 const _to = '';
 const _gas = 999999999999999;
 const _gasPrice = 20000000000;
@@ -172,13 +174,13 @@ unlock().then(()=> {
 // console.log('res --- ', web3.utils.hexToAscii('0x3200000000000000000000000000000000000000000000000000000000000000'))
 
 // 测试大型oz项目的TreeBox
-// TreeBoxTest()
+TreeBoxTest()
 
 // 测试合约之间互相调用的原子性
 // ContractsCallsTest()
 
 // 测试通过自己写的solintan的以太坊合约管理系统的oz的合约升级
-UpgradeTest()
+// UpgradeTest()
 /******************************************↑↑↑测试区域↑↑↑*****************************************************/
 })
 
@@ -207,31 +209,43 @@ async function Benchmark() {
 }
 
 async function TreeBoxTest() {
-    // 先部署projectList
-    let plAddr = await deploy(plContractJson);
-    console.log('pl addr --- ', plAddr);
-    await send(plAddr, plContractJson, 'initialize');
-    // 部署AssetBookerFactory
-    let abfAddr = await deploy(abfContractJson);
-    console.log('abf addr --- ', abfAddr);
-    await send(abfAddr, abfContractJson, 'initialize', web3.utils.utf8ToHex('1'), plAddr);
-    // 在projectList里面注册项目的工厂合约，即AssetBookerFactory
-    // await send(plAddr, plContractJson, 'registProject', web3.utils.utf8ToHex('1'), 'AssetBookerFactory', abfAddr, JSON.stringify(abfContractJson));
-    await send(plAddr, plContractJson, 'registProject', web3.utils.utf8ToHex('1'), 'AssetBookerFactory', abfAddr);
-    // 调用生成AssetBooker
-    let abRes = await send(abfAddr, abfContractJson, 'create', '0x148D910aB6e59998553F3298f0c442e1d7632118');
-    let abAddr = abRes.events.ContractInstantiation.returnValues.instantiation;
-    console.log('ab addr --- ', abAddr);
+    // // 先部署projectList
+    // let plAddr = await deploy(plContractJson);
+    // console.log('pl addr --- ', plAddr);
+    // await send(plAddr, plContractJson, 'initialize');
+    // // 部署AssetBookerFactory
+    // let abfAddr = await deploy(abfContractJson);
+    // console.log('abf addr --- ', abfAddr);
+    // await send(abfAddr, abfContractJson, 'initialize', web3.utils.utf8ToHex('1'), plAddr);
+    // // 在projectList里面注册项目的工厂合约，即AssetBookerFactory
+    // // await send(plAddr, plContractJson, 'registProject', web3.utils.utf8ToHex('1'), 'AssetBookerFactory', abfAddr, JSON.stringify(abfContractJson));
+    // await send(plAddr, plContractJson, 'registProject', web3.utils.utf8ToHex('1'), 'AssetBookerFactory', abfAddr);
+    // // 调用生成AssetBooker
+    // let abRes = await send(abfAddr, abfContractJson, 'create', '0x148D910aB6e59998553F3298f0c442e1d7632118');
+    // let abAddr = abRes.events.ContractInstantiation.returnValues.instantiation;
+    // console.log('ab addr --- ', abAddr);
 
-    //!!! 查看两个合约的owner都是谁
-    let o1 = await call(abfAddr, abfContractJson, 'owner'); // 应该是调用的账户
-    let o2 = await call(abAddr, abContractJson, 'owner'); // 应该是工厂合约
-    console.log('owners --- ', o1, o2);
+    // //!!! 查看两个合约的owner都是谁
+    // let o1 = await call(abfAddr, abfContractJson, 'owner'); // 应该是调用的账户
+    // let o2 = await call(abAddr, abContractJson, 'owner'); // 应该是工厂合约
+    // console.log('owners --- ', o1, o2);
 
-    //!!! 查看projectList合约的信息是否通过合约之间的调用成功更新
-    let r1 = await call(plAddr, plContractJson, 'getProjectInterfaceByID', web3.utils.utf8ToHex('1'));
-    let r2 = await call(plAddr, plContractJson, 'getProjectInfoByID', web3.utils.utf8ToHex('1'));
-    console.log('results --- ', r1, r2);
+    // //!!! 查看projectList合约的信息是否通过合约之间的调用成功更新
+    // let r1 = await call(plAddr, plContractJson, 'getProjectInterfaceByID', web3.utils.utf8ToHex('1'));
+    // let r2 = await call(plAddr, plContractJson, 'getProjectInfoByID', web3.utils.utf8ToHex('1'));
+    // console.log('results --- ', r1, r2);
+
+    // 单独测试treebox
+    const tbAddr = '0x391EcAF3668E882Ad5BF560EB621bb91c65eDc9d';
+
+    await send(tbAddr, tb, 
+        'initialize',
+        '0x0000000000000000000000000000000000000001',
+        '0x0000000000000000000000000000000000000002',
+        '0x7eff122b94897ea5b0e2a9abf47b86337fafebdc');
+    await call(tbAddr, tb, 'getUserInfo', '0x7eff122b94897ea5b0e2a9abf47b86337fafebdc');
+    await send(tbAddr, tb, 'addItemToBox', '0x7eff122b94897ea5b0e2a9abf47b86337fafebdc', 'key123123123', 'http://asdfasdfasdf', []);
+    await call(tbAddr, tb, 'getItemsFromBox', '0x7eff122b94897ea5b0e2a9abf47b86337fafebdc');
 }
 
 async function ContractsCallsTest() {
