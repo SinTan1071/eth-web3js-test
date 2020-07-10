@@ -1,4 +1,5 @@
 const Web3 = require('web3');
+const testCJ = require('./test.json');
 // const contractJson = require('./setget.json');
 // const contractJson = require('./ecrecover.json');
 // const contractJson = require('./SMecrecover.json');
@@ -24,15 +25,16 @@ const sidv3 = require('./TreeBox/StandardIDType_V3.json');
 
 const tb = require('./TreeBox/TreeBox.json');
 
-const web3 = new Web3('http://localhost:8545');
-const _from = '0x7eff122b94897ea5b0e2a9abf47b86337fafebdc'; // secp256k1
-const _pass = "1234";
-// const _from = '6EB0CD3B7046B6712E55309FA1D0A5B5A9883687'; // sm2p256v1
+// const web3 = new Web3('http://odyscluster-validator1.test.shie.com.cn/');
+const web3 = new Web3('http://127.0.0.1:1723');
+// const _from = '0x7eff122b94897ea5b0e2a9abf47b86337fafebdc'; // secp256k1
+// const _pass = "1234";
+// const _from = '0x2f689c3776c510a7ef56f441b4b5ed31a5da2275'; // sm2p256v1
 // const _pass = "12345";
-// const _from = '0x5bE6Bbe4428B6fE3d2F2c0f3984BC41Ad94f4E8d';
-// const _pass = '';
+const _from = '0x5bE6Bbe4428B6fE3d2F2c0f3984BC41Ad94f4E8d';
+const _pass = '';
 const _to = '';
-const _gas = 999999999999999;
+const _gas = 99999999999999;
 const _gasPrice = 20000000000;
 
 async function unlock() {
@@ -95,7 +97,7 @@ async function send(contractAddr, contractJson, methodName, ...params) {
     return receipt;
 }
 
-unlock().then(()=> {
+// unlock().then(()=> {
 /******************************************↓↓↓测试区域↓↓↓*****************************************************/
 // 这是setget测试
 // deploy();
@@ -174,15 +176,19 @@ unlock().then(()=> {
 // console.log('res --- ', web3.utils.hexToAscii('0x3200000000000000000000000000000000000000000000000000000000000000'))
 
 // 测试大型oz项目的TreeBox
-TreeBoxTest()
+TreeBoxSingleTest()
+// TreeBoxTest()
 
 // 测试合约之间互相调用的原子性
 // ContractsCallsTest()
 
 // 测试通过自己写的solintan的以太坊合约管理系统的oz的合约升级
 // UpgradeTest()
+
+// 测试require的返回报错信息
+// RequireErrorTest()
 /******************************************↑↑↑测试区域↑↑↑*****************************************************/
-})
+// })
 
 /*******************************************
  * 测试方法
@@ -235,17 +241,39 @@ async function TreeBoxTest() {
     // let r2 = await call(plAddr, plContractJson, 'getProjectInfoByID', web3.utils.utf8ToHex('1'));
     // console.log('results --- ', r1, r2);
 
-    // 单独测试treebox
-    const tbAddr = '0x391EcAF3668E882Ad5BF560EB621bb91c65eDc9d';
+}
 
-    await send(tbAddr, tb, 
-        'initialize',
-        '0x0000000000000000000000000000000000000001',
-        '0x0000000000000000000000000000000000000002',
-        '0x7eff122b94897ea5b0e2a9abf47b86337fafebdc');
-    await call(tbAddr, tb, 'getUserInfo', '0x7eff122b94897ea5b0e2a9abf47b86337fafebdc');
-    await send(tbAddr, tb, 'addItemToBox', '0x7eff122b94897ea5b0e2a9abf47b86337fafebdc', 'key123123123', 'http://asdfasdfasdf', []);
-    await call(tbAddr, tb, 'getItemsFromBox', '0x7eff122b94897ea5b0e2a9abf47b86337fafebdc');
+async function TreeBoxSingleTest() {
+    const addr0 = '0x0000000000000000000000000000000000000000';
+    const addr1 = '0x0000000000000000000000000000000000000001';
+    const addr2 = '0x0000000000000000000000000000000000000002';
+    // 单独测试treebox
+    const tbAddr = '0x85f14C7B46CaC95d367d096CD17D3B4fFB7a51bF';
+    // 测试老中医说的call随便不用签名不用解锁
+    await call(tbAddr, tb, 'getUserInfo', '0x5bE6Bbe4428B6fE3d2F2c0f3984BC41Ad94f4E8d');
+    
+    // 测试addItemToBox
+    await send(tbAddr, tb, 'addItemToBox', addr1, 'k1241512435', 'http://xxxxxx', ['0x198C1F50a75ffaa046A7180E12e55fcf005BDa81']);
+    //0.缺少参数测试 
+    // await send(tbAddr, tb, 'addItemToBox', addr0, '', '', []);
+    // await send(tbAddr, tb, 'addItemToBox', addr0, '', 'http://111111', []);
+    //1.onlyIfUserActive，更换_from的地址
+    // await send(tbAddr, tb, 'addItemToBox', addr0, '', 'http://111111', []);
+    //2.onlyIfUserBoxIsNotFull
+    // await send(tbAddr, tb, 'addItemToBox', addr0, '', 'http://6666', ['0xbf1dfFD25E1A101898791c87AeE683A3B65555D7', '0x198C1F50a75ffaa046A7180E12e55fcf005BDa81']);
+    // await send(tbAddr, tb, 'addItemToBox', addr0, '', 'http://[ERROR]onlyIfUserBoxIsNotFull', []);
+    //3.onlyIfUserBoxIsNotReleased
+    // await send(tbAddr, tb, 'pushBoxStatus', '0x5bE6Bbe4428B6fE3d2F2c0f3984BC41Ad94f4E8d');
+    // await send(tbAddr, tb, 'addItemToBox', addr0, '', 'http://[ERROR]onlyIfUserBoxIsNotReleased', []);
+    // await call(tbAddr, tb, 'getItemsFromBox', '0x7eff122b94897ea5b0e2a9abf47b86337fafebdc');
+    // await send(tbAddr, tb, 'addNextersToItem', '0x7eff122b94897ea5b0e2a9abf47b86337fafebdc', 0, ['0x2f689c3776c510a7ef56f441b4b5ed31a5da2275','0x3e43480d62eee37b3bad3e461a8336f324a1bf68']);
+    // await send(tbAddr, tb, 'addNextersToItem', '0x7eff122b94897ea5b0e2a9abf47b86337fafebdc', 1, ['0x2f689c3776c510a7ef56f441b4b5ed31a5da2275']);
+    // await send(tbAddr, tb, 'addNextersToItem', '0x7eff122b94897ea5b0e2a9abf47b86337fafebdc', 2, ['0x3e43480d62eee37b3bad3e461a8336f324a1bf68']);
+    // await call(tbAddr, tb, 'getNextersFromItem', '0x7eff122b94897ea5b0e2a9abf47b86337fafebdc', 0);
+    // await call(tbAddr, tb, 'getNextersFromItem', '0x7eff122b94897ea5b0e2a9abf47b86337fafebdc', 1);
+    // await call(tbAddr, tb, 'getNextersFromItem', '0x7eff122b94897ea5b0e2a9abf47b86337fafebdc', 2);
+    // await call(tbAddr, tb, 'getKeyFromItem', '0x7eff122b94897ea5b0e2a9abf47b86337fafebdc', '0x7eff122b94897ea5b0e2a9abf47b86337fafebdc', 1);
+    
 }
 
 async function ContractsCallsTest() {
@@ -265,7 +293,10 @@ async function ContractsCallsTest() {
 }
 
 async function UpgradeTest() {
-    const addr = '0xcB1B962Ac974D7d8880D3226626992dF16Fc7624';
+    const addr = '0x289ffa3E535A79a4645ecA8a63A4e907FF5AeF78';
+    // modifier test
+    // await send(addr, sid, 'setUserIdType', '急急急');
+    // await call(addr, sid, 'getUserIdType', '居民身份证');
     // owner
     // await call(addr, sid, 'owner');
     // v0
@@ -285,13 +316,22 @@ async function UpgradeTest() {
     // await send(addr, sidv2, 'setTest2', 222);
     // await call(addr, sidv2, 'v2');
     // v3
-    await send(addr, sidv3, 'setUserIdType', '机器码');
-    await call(addr, sidv3, 'getUserIdType', '居民身份证');
-    await call(addr, sidv3, 'getUserIdType', '护照');
-    await call(addr, sidv3, 'getUserIdType', '企业税号');
-    await call(addr, sidv3, 'getUserIdType', '机器码');
+    // await send(addr, sidv3, 'setUserIdType', '机器码');
+    // await call(addr, sidv3, 'getUserIdType', '居民身份证');
+    // await call(addr, sidv3, 'getUserIdType', '护照');
+    // await call(addr, sidv3, 'getUserIdType', '企业税号');
+    // await call(addr, sidv3, 'getUserIdType', '机器码');
     // await send(addr, sidv3, 'setTest3', TODO);
-    await call(addr, sidv3, 'v3');
+    // await call(addr, sidv3, 'v3');
+}
+
+async function RequireErrorTest() {
+    console.log('web3 version: ', web3.version);
+
+    let cAddr = await deploy(testCJ);
+
+    await send(cAddr, testCJ, 'set', '666');
+    await call(cAddr, testCJ, 'get');
 }
 
 /*******************************************
