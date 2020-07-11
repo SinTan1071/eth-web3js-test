@@ -248,24 +248,46 @@ async function TreeBoxSingleTest() {
     const addr1 = '0x0000000000000000000000000000000000000001';
     const addr2 = '0x0000000000000000000000000000000000000002';
     // 单独测试treebox
-    const tbAddr = '0x85f14C7B46CaC95d367d096CD17D3B4fFB7a51bF';
+    const tbAddr = '0x79Ab3D9528E1882666A0385Dc257698149309d27';
     // 测试老中医说的call随便不用签名不用解锁
-    await call(tbAddr, tb, 'getUserInfo', '0x5bE6Bbe4428B6fE3d2F2c0f3984BC41Ad94f4E8d');
+    // await call(tbAddr, tb, 'getUserInfo', '0x5bE6Bbe4428B6fE3d2F2c0f3984BC41Ad94f4E8d');
     
     // 测试addItemToBox
-    await send(tbAddr, tb, 'addItemToBox', addr1, 'k1241512435', 'http://xxxxxx', ['0x198C1F50a75ffaa046A7180E12e55fcf005BDa81']);
+    // await send(tbAddr, tb, 'addItemToBox', addr1, 'k1241512435', 'http://111', ['0x198C1F50a75ffaa046A7180E12e55fcf005BDa81']);
     //0.缺少参数测试 
     // await send(tbAddr, tb, 'addItemToBox', addr0, '', '', []);
-    // await send(tbAddr, tb, 'addItemToBox', addr0, '', 'http://111111', []);
+    // await send(tbAddr, tb, 'addItemToBox', addr0, '', 'http://222', []);
     //1.onlyIfUserActive，更换_from的地址
     // await send(tbAddr, tb, 'addItemToBox', addr0, '', 'http://111111', []);
     //2.onlyIfUserBoxIsNotFull
-    // await send(tbAddr, tb, 'addItemToBox', addr0, '', 'http://6666', ['0xbf1dfFD25E1A101898791c87AeE683A3B65555D7', '0x198C1F50a75ffaa046A7180E12e55fcf005BDa81']);
+    // await send(tbAddr, tb, 'addItemToBox', addr0, '', 'http://333', ['0xbf1dfFD25E1A101898791c87AeE683A3B65555D7', '0x198C1F50a75ffaa046A7180E12e55fcf005BDa81']);
     // await send(tbAddr, tb, 'addItemToBox', addr0, '', 'http://[ERROR]onlyIfUserBoxIsNotFull', []);
     //3.onlyIfUserBoxIsNotReleased
     // await send(tbAddr, tb, 'pushBoxStatus', '0x5bE6Bbe4428B6fE3d2F2c0f3984BC41Ad94f4E8d');
     // await send(tbAddr, tb, 'addItemToBox', addr0, '', 'http://[ERROR]onlyIfUserBoxIsNotReleased', []);
-    // await call(tbAddr, tb, 'getItemsFromBox', '0x7eff122b94897ea5b0e2a9abf47b86337fafebdc');
+    
+    // 测试getItemsFromBox
+    //0.错误参数测试
+    // await call(tbAddr, tb, 'getItemsFromBox', '0x7eff122b94897ea5b0e2a9abf47b86337fafebdc'); // 不存在box
+    // await call(tbAddr, tb, 'getItemsFromBox', _from); // 正常情况
+    //1.用Receiver或者nexter获取
+    // await send(tbAddr, tb, 'pushUserStatus', '0x198C1F50a75ffaa046A7180E12e55fcf005BDa81');
+    // await call(tbAddr, tb, 'getUserInfo', '0x198C1F50a75ffaa046A7180E12e55fcf005BDa81');
+    // await call(tbAddr, tb, 'getItemsFromBox', '0x5bE6Bbe4428B6fE3d2F2c0f3984BC41Ad94f4E8d'); // box在没有release的时候，nexter不可以获取到值
+    //1.1 先让owner pushBoxStatus，然后nexter就可以获取到值
+    // await send(tbAddr, tb, 'pushBoxStatus', '0x5bE6Bbe4428B6fE3d2F2c0f3984BC41Ad94f4E8d');
+    // await call(tbAddr, tb, 'getItemsFromBox', '0x5bE6Bbe4428B6fE3d2F2c0f3984BC41Ad94f4E8d'); // box release，nexter可以获取到值
+
+    // 测试delItemsFromBox
+    // 还原box状态
+    // await send(tbAddr, tb, 'pushBoxStatus', '0x5bE6Bbe4428B6fE3d2F2c0f3984BC41Ad94f4E8d');
+    await call(tbAddr, tb, 'getUserInfo', '0x5bE6Bbe4428B6fE3d2F2c0f3984BC41Ad94f4E8d');
+    //0.错误参数测试
+    // await send(tbAddr, tb, 'delItemFromBox', 3);
+    //1.正确参数测试
+    await send(tbAddr,tb, 'delItemFromBox', 0);
+    await call(tbAddr, tb, 'getItemsFromBox', '0x5bE6Bbe4428B6fE3d2F2c0f3984BC41Ad94f4E8d'); // box release，nexter可以获取到值
+
     // await send(tbAddr, tb, 'addNextersToItem', '0x7eff122b94897ea5b0e2a9abf47b86337fafebdc', 0, ['0x2f689c3776c510a7ef56f441b4b5ed31a5da2275','0x3e43480d62eee37b3bad3e461a8336f324a1bf68']);
     // await send(tbAddr, tb, 'addNextersToItem', '0x7eff122b94897ea5b0e2a9abf47b86337fafebdc', 1, ['0x2f689c3776c510a7ef56f441b4b5ed31a5da2275']);
     // await send(tbAddr, tb, 'addNextersToItem', '0x7eff122b94897ea5b0e2a9abf47b86337fafebdc', 2, ['0x3e43480d62eee37b3bad3e461a8336f324a1bf68']);

@@ -1,421 +1,249 @@
 {
-    "abi": [
-      {
-        "anonymous": false,
-        "inputs": [
-          {
-            "indexed": true,
-            "internalType": "address",
-            "name": "previousOwner",
-            "type": "address"
-          },
-          {
-            "indexed": true,
-            "internalType": "address",
-            "name": "newOwner",
-            "type": "address"
-          }
-        ],
-        "name": "OwnershipTransferred",
-        "type": "event"
-      },
-      {
-        "inputs": [],
-        "name": "ACTIVE",
-        "outputs": [
-          {
-            "internalType": "uint8",
-            "name": "",
-            "type": "uint8"
-          }
-        ],
-        "stateMutability": "view",
-        "type": "function"
-      },
-      {
-        "inputs": [],
-        "name": "DefaultItemsMaxCount",
-        "outputs": [
-          {
-            "internalType": "uint8",
-            "name": "",
-            "type": "uint8"
-          }
-        ],
-        "stateMutability": "view",
-        "type": "function"
-      },
-      {
-        "inputs": [],
-        "name": "NOT_ACTIVE",
-        "outputs": [
-          {
-            "internalType": "uint8",
-            "name": "",
-            "type": "uint8"
-          }
-        ],
-        "stateMutability": "view",
-        "type": "function"
-      },
-      {
-        "inputs": [],
-        "name": "NOT_AVAILABLE",
-        "outputs": [
-          {
-            "internalType": "uint8",
-            "name": "",
-            "type": "uint8"
-          }
-        ],
-        "stateMutability": "view",
-        "type": "function"
-      },
-      {
-        "inputs": [],
-        "name": "RELEASED",
-        "outputs": [
-          {
-            "internalType": "uint8",
-            "name": "",
-            "type": "uint8"
-          }
-        ],
-        "stateMutability": "view",
-        "type": "function"
-      },
-      {
-        "inputs": [],
-        "name": "UNRELEASED",
-        "outputs": [
-          {
-            "internalType": "uint8",
-            "name": "",
-            "type": "uint8"
-          }
-        ],
-        "stateMutability": "view",
-        "type": "function"
-      },
-      {
-        "inputs": [
-          {
-            "internalType": "address",
-            "name": "keyEncrypter",
-            "type": "address"
-          },
-          {
-            "internalType": "string",
-            "name": "keyEncrypted",
-            "type": "string"
-          },
-          {
-            "internalType": "string",
-            "name": "uri",
-            "type": "string"
-          },
-          {
-            "internalType": "address[]",
-            "name": "nexters",
-            "type": "address[]"
-          }
-        ],
-        "name": "addItemToBox",
-        "outputs": [],
-        "stateMutability": "nonpayable",
-        "type": "function"
-      },
-      {
-        "inputs": [
-          {
-            "internalType": "address",
-            "name": "prever",
-            "type": "address"
-          },
-          {
-            "internalType": "uint256",
-            "name": "itemIdx",
-            "type": "uint256"
-          },
-          {
-            "internalType": "address[]",
-            "name": "nexters",
-            "type": "address[]"
-          }
-        ],
-        "name": "addNextersToItem",
-        "outputs": [],
-        "stateMutability": "nonpayable",
-        "type": "function"
-      },
-      {
-        "inputs": [],
-        "name": "assetBookerAddress",
-        "outputs": [
-          {
-            "internalType": "address",
-            "name": "",
-            "type": "address"
-          }
-        ],
-        "stateMutability": "view",
-        "type": "function"
-      },
-      {
-        "inputs": [
-          {
-            "internalType": "uint256",
-            "name": "itemIdx",
-            "type": "uint256"
-          }
-        ],
-        "name": "delItemFromBox",
-        "outputs": [],
-        "stateMutability": "nonpayable",
-        "type": "function"
-      },
-      {
-        "inputs": [
-          {
-            "internalType": "address",
-            "name": "prever",
-            "type": "address"
-          },
-          {
-            "internalType": "uint256",
-            "name": "itemIdx",
-            "type": "uint256"
-          },
-          {
-            "internalType": "address[]",
-            "name": "nexters",
-            "type": "address[]"
-          }
-        ],
-        "name": "delNextersFromItem",
-        "outputs": [],
-        "stateMutability": "nonpayable",
-        "type": "function"
-      },
-      {
-        "inputs": [
-          {
-            "internalType": "address",
-            "name": "prever",
-            "type": "address"
-          }
-        ],
-        "name": "getItemsFromBox",
-        "outputs": [
-          {
-            "internalType": "string",
-            "name": "itemsURI",
-            "type": "string"
-          }
-        ],
-        "stateMutability": "view",
-        "type": "function"
-      },
-      {
-        "inputs": [
-          {
-            "internalType": "address",
-            "name": "prever",
-            "type": "address"
-          },
-          {
-            "internalType": "address",
-            "name": "user",
-            "type": "address"
-          },
-          {
-            "internalType": "uint256",
-            "name": "itemIdx",
-            "type": "uint256"
-          }
-        ],
-        "name": "getKeyFromItem",
-        "outputs": [
-          {
-            "internalType": "string",
-            "name": "keyEncrypted",
-            "type": "string"
-          }
-        ],
-        "stateMutability": "view",
-        "type": "function"
-      },
-      {
-        "inputs": [
-          {
-            "internalType": "address",
-            "name": "prever",
-            "type": "address"
-          },
-          {
-            "internalType": "uint256",
-            "name": "itemIdx",
-            "type": "uint256"
-          }
-        ],
-        "name": "getNextersFromItem",
-        "outputs": [
-          {
-            "internalType": "address[]",
-            "name": "",
-            "type": "address[]"
-          }
-        ],
-        "stateMutability": "view",
-        "type": "function"
-      },
-      {
-        "inputs": [],
-        "name": "getPrevers",
-        "outputs": [
-          {
-            "internalType": "address[]",
-            "name": "",
-            "type": "address[]"
-          }
-        ],
-        "stateMutability": "view",
-        "type": "function"
-      },
-      {
-        "inputs": [
-          {
-            "internalType": "address",
-            "name": "user",
-            "type": "address"
-          }
-        ],
-        "name": "getUserInfo",
-        "outputs": [
-          {
-            "internalType": "uint8",
-            "name": "ownerStatus",
-            "type": "uint8"
-          },
-          {
-            "internalType": "uint8",
-            "name": "status",
-            "type": "uint8"
-          },
-          {
-            "internalType": "uint256",
-            "name": "nodeId",
-            "type": "uint256"
-          },
-          {
-            "internalType": "uint256",
-            "name": "itemsMaxCount",
-            "type": "uint256"
-          },
-          {
-            "internalType": "uint256",
-            "name": "itemsCount",
-            "type": "uint256"
-          }
-        ],
-        "stateMutability": "view",
-        "type": "function"
-      },
-      {
-        "inputs": [
-          {
-            "internalType": "address",
-            "name": "myFactoryAddr",
-            "type": "address"
-          },
-          {
-            "internalType": "address",
-            "name": "assetBookerAddr",
-            "type": "address"
-          },
-          {
-            "internalType": "address",
-            "name": "seedUser",
-            "type": "address"
-          }
-        ],
-        "name": "initialize",
-        "outputs": [],
-        "stateMutability": "nonpayable",
-        "type": "function"
-      },
-      {
-        "inputs": [],
-        "name": "myFactoryAddress",
-        "outputs": [
-          {
-            "internalType": "address",
-            "name": "",
-            "type": "address"
-          }
-        ],
-        "stateMutability": "view",
-        "type": "function"
-      },
-      {
-        "inputs": [],
-        "name": "owner",
-        "outputs": [
-          {
-            "internalType": "address",
-            "name": "",
-            "type": "address"
-          }
-        ],
-        "stateMutability": "view",
-        "type": "function"
-      },
-      {
-        "inputs": [
-          {
-            "internalType": "address",
-            "name": "user",
-            "type": "address"
-          }
-        ],
-        "name": "pushBoxStatus",
-        "outputs": [],
-        "stateMutability": "nonpayable",
-        "type": "function"
-      },
-      {
-        "inputs": [
-          {
-            "internalType": "address",
-            "name": "user",
-            "type": "address"
-          }
-        ],
-        "name": "pushUserStatus",
-        "outputs": [],
-        "stateMutability": "nonpayable",
-        "type": "function"
-      },
-      {
-        "inputs": [],
-        "name": "renounceOwnership",
-        "outputs": [],
-        "stateMutability": "nonpayable",
-        "type": "function"
-      },
-      {
-        "inputs": [
-          {
-            "internalType": "address",
-            "name": "newOwner",
-            "type": "address"
-          }
-        ],
-        "name": "transferOwnership",
-        "outputs": [],
-        "stateMutability": "nonpayable",
-        "type": "function"
-      }
-    ],
+    "abi": [{
+      "anonymous": false,
+      "inputs": [{
+        "indexed": true,
+        "internalType": "address",
+        "name": "previousOwner",
+        "type": "address"
+      }, {
+        "indexed": true,
+        "internalType": "address",
+        "name": "newOwner",
+        "type": "address"
+      }],
+      "name": "OwnershipTransferred",
+      "type": "event"
+    }, {
+      "inputs": [],
+      "name": "ACTIVE",
+      "outputs": [{
+        "internalType": "uint8",
+        "name": "",
+        "type": "uint8"
+      }],
+      "stateMutability": "view",
+      "type": "function"
+    }, {
+      "inputs": [],
+      "name": "DefaultItemsMaxCount",
+      "outputs": [{
+        "internalType": "uint8",
+        "name": "",
+        "type": "uint8"
+      }],
+      "stateMutability": "view",
+      "type": "function"
+    }, {
+      "inputs": [],
+      "name": "NOT_ACTIVE",
+      "outputs": [{
+        "internalType": "uint8",
+        "name": "",
+        "type": "uint8"
+      }],
+      "stateMutability": "view",
+      "type": "function"
+    }, {
+      "inputs": [],
+      "name": "NOT_AVAILABLE",
+      "outputs": [{
+        "internalType": "uint8",
+        "name": "",
+        "type": "uint8"
+      }],
+      "stateMutability": "view",
+      "type": "function"
+    }, {
+      "inputs": [],
+      "name": "RELEASED",
+      "outputs": [{
+        "internalType": "uint8",
+        "name": "",
+        "type": "uint8"
+      }],
+      "stateMutability": "view",
+      "type": "function"
+    }, {
+      "inputs": [],
+      "name": "UNRELEASED",
+      "outputs": [{
+        "internalType": "uint8",
+        "name": "",
+        "type": "uint8"
+      }],
+      "stateMutability": "view",
+      "type": "function"
+    }, {
+      "inputs": [{
+        "internalType": "address",
+        "name": "keyEncrypter",
+        "type": "address"
+      }, {
+        "internalType": "string",
+        "name": "keyEncrypted",
+        "type": "string"
+      }, {
+        "internalType": "string",
+        "name": "uri",
+        "type": "string"
+      }, {
+        "internalType": "address[]",
+        "name": "nexters",
+        "type": "address[]"
+      }],
+      "name": "addItemToBox",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    }, {
+      "inputs": [],
+      "name": "assetBookerAddress",
+      "outputs": [{
+        "internalType": "address",
+        "name": "",
+        "type": "address"
+      }],
+      "stateMutability": "view",
+      "type": "function"
+    }, {
+      "inputs": [{
+        "internalType": "uint256",
+        "name": "itemIdx",
+        "type": "uint256"
+      }],
+      "name": "delItemFromBox",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    }, {
+      "inputs": [{
+        "internalType": "address",
+        "name": "prever",
+        "type": "address"
+      }],
+      "name": "getItemsFromBox",
+      "outputs": [{
+        "internalType": "string",
+        "name": "itemsURI",
+        "type": "string"
+      }],
+      "stateMutability": "view",
+      "type": "function"
+    }, {
+      "inputs": [],
+      "name": "getPrevers",
+      "outputs": [{
+        "internalType": "address[]",
+        "name": "",
+        "type": "address[]"
+      }],
+      "stateMutability": "view",
+      "type": "function"
+    }, {
+      "inputs": [{
+        "internalType": "address",
+        "name": "user",
+        "type": "address"
+      }],
+      "name": "getUserInfo",
+      "outputs": [{
+        "internalType": "uint8",
+        "name": "ownerStatus",
+        "type": "uint8"
+      }, {
+        "internalType": "uint8",
+        "name": "status",
+        "type": "uint8"
+      }, {
+        "internalType": "uint256",
+        "name": "nodeId",
+        "type": "uint256"
+      }, {
+        "internalType": "uint256",
+        "name": "itemsMaxCount",
+        "type": "uint256"
+      }, {
+        "internalType": "uint256",
+        "name": "itemsCount",
+        "type": "uint256"
+      }],
+      "stateMutability": "view",
+      "type": "function"
+    }, {
+      "inputs": [{
+        "internalType": "address",
+        "name": "myFactoryAddr",
+        "type": "address"
+      }, {
+        "internalType": "address",
+        "name": "assetBookerAddr",
+        "type": "address"
+      }, {
+        "internalType": "address",
+        "name": "seedUser",
+        "type": "address"
+      }],
+      "name": "initialize",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    }, {
+      "inputs": [],
+      "name": "myFactoryAddress",
+      "outputs": [{
+        "internalType": "address",
+        "name": "",
+        "type": "address"
+      }],
+      "stateMutability": "view",
+      "type": "function"
+    }, {
+      "inputs": [],
+      "name": "owner",
+      "outputs": [{
+        "internalType": "address",
+        "name": "",
+        "type": "address"
+      }],
+      "stateMutability": "view",
+      "type": "function"
+    }, {
+      "inputs": [{
+        "internalType": "address",
+        "name": "user",
+        "type": "address"
+      }],
+      "name": "pushBoxStatus",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    }, {
+      "inputs": [{
+        "internalType": "address",
+        "name": "user",
+        "type": "address"
+      }],
+      "name": "pushUserStatus",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    }, {
+      "inputs": [],
+      "name": "renounceOwnership",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    }, {
+      "inputs": [{
+        "internalType": "address",
+        "name": "newOwner",
+        "type": "address"
+      }],
+      "name": "transferOwnership",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    }],
     "bin": ""
 }
