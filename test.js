@@ -34,7 +34,7 @@ const web3 = new Web3('http://127.0.0.1:1723');
 const _from = '0x5bE6Bbe4428B6fE3d2F2c0f3984BC41Ad94f4E8d';
 const _pass = '';
 const _to = '';
-const _gas = 99999999999999;
+const _gas = 999999999999999;
 const _gasPrice = 20000000000;
 
 async function unlock() {
@@ -97,7 +97,7 @@ async function send(contractAddr, contractJson, methodName, ...params) {
     return receipt;
 }
 
-// unlock().then(()=> {
+unlock().then(()=> {
 /******************************************↓↓↓测试区域↓↓↓*****************************************************/
 // 这是setget测试
 // deploy();
@@ -176,7 +176,7 @@ async function send(contractAddr, contractJson, methodName, ...params) {
 // console.log('res --- ', web3.utils.hexToAscii('0x3200000000000000000000000000000000000000000000000000000000000000'))
 
 // 测试大型oz项目的TreeBox
-TreeBoxSingleTest()
+TreeBoxUnitTest()
 // TreeBoxTest()
 
 // 测试合约之间互相调用的原子性
@@ -188,7 +188,7 @@ TreeBoxSingleTest()
 // 测试require的返回报错信息
 // RequireErrorTest()
 /******************************************↑↑↑测试区域↑↑↑*****************************************************/
-// })
+})
 
 /*******************************************
  * 测试方法
@@ -243,14 +243,22 @@ async function TreeBoxTest() {
 
 }
 
-async function TreeBoxSingleTest() {
+async function TreeBoxUnitTest() {
     const addr0 = '0x0000000000000000000000000000000000000000';
     const addr1 = '0x0000000000000000000000000000000000000001';
     const addr2 = '0x0000000000000000000000000000000000000002';
     // 单独测试treebox
-    const tbAddr = '0x79Ab3D9528E1882666A0385Dc257698149309d27';
+    const tbAddr = '0x85f14C7B46CaC95d367d096CD17D3B4fFB7a51bF';
     // 测试老中医说的call随便不用签名不用解锁
     // await call(tbAddr, tb, 'getUserInfo', '0x5bE6Bbe4428B6fE3d2F2c0f3984BC41Ad94f4E8d');
+    // 管理员测试sintan1071 dev 获取tree
+    await call(tbAddr, tb, 'getTree');
+    await call(tbAddr, tb, 'getInserterFromItem', 3, '0x5bE6Bbe4428B6fE3d2F2c0f3984BC41Ad94f4E8d', '0xbf1dfFD25E1A101898791c87AeE683A3B65555D7');
+    // await call(tbAddr, tb, 'getInserterFromItem', 0, '0x5bE6Bbe4428B6fE3d2F2c0f3984BC41Ad94f4E8d', '0x198C1F50a75ffaa046A7180E12e55fcf005BDa81');
+    await call(tbAddr, tb, 'getInserterFromItem', 2, '0x5bE6Bbe4428B6fE3d2F2c0f3984BC41Ad94f4E8d', '0x198C1F50a75ffaa046A7180E12e55fcf005BDa81');
+    // await call(tbAddr, tb, 'getInserterFromItem', 1, '0x5bE6Bbe4428B6fE3d2F2c0f3984BC41Ad94f4E8d', '0xbf1dfFD25E1A101898791c87AeE683A3B65555D7');
+    await call(tbAddr, tb, 'getInserterFromItem', 4, '0x5bE6Bbe4428B6fE3d2F2c0f3984BC41Ad94f4E8d', '0xbf1dfFD25E1A101898791c87AeE683A3B65555D7');
+    await call(tbAddr, tb, 'getInserterFromItem', 4, '0x5bE6Bbe4428B6fE3d2F2c0f3984BC41Ad94f4E8d', '0x198C1F50a75ffaa046A7180E12e55fcf005BDa81');
     
     // 测试addItemToBox
     // await send(tbAddr, tb, 'addItemToBox', addr1, 'k1241512435', 'http://111', ['0x198C1F50a75ffaa046A7180E12e55fcf005BDa81']);
@@ -261,6 +269,8 @@ async function TreeBoxSingleTest() {
     // await send(tbAddr, tb, 'addItemToBox', addr0, '', 'http://111111', []);
     //2.onlyIfUserBoxIsNotFull
     // await send(tbAddr, tb, 'addItemToBox', addr0, '', 'http://333', ['0xbf1dfFD25E1A101898791c87AeE683A3B65555D7', '0x198C1F50a75ffaa046A7180E12e55fcf005BDa81']);
+    // await send(tbAddr, tb, 'addItemToBox', addr0, '', 'http://3330', ['0xbf1dfFD25E1A101898791c87AeE683A3B65555D7']);
+    // await send(tbAddr, tb, 'addItemToBox', addr0, '', 'http://3331', ['0x198C1F50a75ffaa046A7180E12e55fcf005BDa81']);
     // await send(tbAddr, tb, 'addItemToBox', addr0, '', 'http://[ERROR]onlyIfUserBoxIsNotFull', []);
     //3.onlyIfUserBoxIsNotReleased
     // await send(tbAddr, tb, 'pushBoxStatus', '0x5bE6Bbe4428B6fE3d2F2c0f3984BC41Ad94f4E8d');
@@ -269,7 +279,11 @@ async function TreeBoxSingleTest() {
     // 测试getItemsFromBox
     //0.错误参数测试
     // await call(tbAddr, tb, 'getItemsFromBox', '0x7eff122b94897ea5b0e2a9abf47b86337fafebdc'); // 不存在box
-    // await call(tbAddr, tb, 'getItemsFromBox', _from); // 正常情况
+    await call(tbAddr, tb, 'getItemIdsFromBox', _from); // 正常情况
+    // await call(tbAddr, tb, 'getItemFromBoxById', 0, _from); // 错误情况
+    await call(tbAddr, tb, 'getItemFromBoxById', 3, _from); // 正常情况
+    await call(tbAddr, tb, 'getItemFromBoxById', 2, _from); // 正常情况
+    await call(tbAddr, tb, 'getItemFromBoxById', 4, _from); // 正常情况
     //1.用Receiver或者nexter获取
     // await send(tbAddr, tb, 'pushUserStatus', '0x198C1F50a75ffaa046A7180E12e55fcf005BDa81');
     // await call(tbAddr, tb, 'getUserInfo', '0x198C1F50a75ffaa046A7180E12e55fcf005BDa81');
@@ -282,18 +296,23 @@ async function TreeBoxSingleTest() {
     // 还原box状态
     // await send(tbAddr, tb, 'pushBoxStatus', '0x5bE6Bbe4428B6fE3d2F2c0f3984BC41Ad94f4E8d');
     await call(tbAddr, tb, 'getUserInfo', '0x5bE6Bbe4428B6fE3d2F2c0f3984BC41Ad94f4E8d');
+    await call(tbAddr, tb, 'getUserInfo', '0x198C1F50a75ffaa046A7180E12e55fcf005BDa81');
+    await call(tbAddr, tb, 'getUserInfo', '0xbf1dfFD25E1A101898791c87AeE683A3B65555D7');
     //0.错误参数测试
     // await send(tbAddr, tb, 'delItemFromBox', 3);
     //1.正确参数测试
-    await send(tbAddr,tb, 'delItemFromBox', 0);
-    await call(tbAddr, tb, 'getItemsFromBox', '0x5bE6Bbe4428B6fE3d2F2c0f3984BC41Ad94f4E8d'); // box release，nexter可以获取到值
+    // let res = await send(tbAddr,tb, 'delItemFromBox', 3);
+    // console.log('sintan1071 dev --- 事件返回结果: ', res.events.SinTan1071DevTEST.returnValues)
+    // await call(tbAddr, tb, 'getItemsFromBox', '0x5bE6Bbe4428B6fE3d2F2c0f3984BC41Ad94f4E8d'); // box release，nexter可以获取到值
 
     // await send(tbAddr, tb, 'addNextersToItem', '0x7eff122b94897ea5b0e2a9abf47b86337fafebdc', 0, ['0x2f689c3776c510a7ef56f441b4b5ed31a5da2275','0x3e43480d62eee37b3bad3e461a8336f324a1bf68']);
     // await send(tbAddr, tb, 'addNextersToItem', '0x7eff122b94897ea5b0e2a9abf47b86337fafebdc', 1, ['0x2f689c3776c510a7ef56f441b4b5ed31a5da2275']);
     // await send(tbAddr, tb, 'addNextersToItem', '0x7eff122b94897ea5b0e2a9abf47b86337fafebdc', 2, ['0x3e43480d62eee37b3bad3e461a8336f324a1bf68']);
-    // await call(tbAddr, tb, 'getNextersFromItem', '0x7eff122b94897ea5b0e2a9abf47b86337fafebdc', 0);
+    
+    // await call(tbAddr, tb, 'getNextersFromItem', '0x5bE6Bbe4428B6fE3d2F2c0f3984BC41Ad94f4E8d', 0);
     // await call(tbAddr, tb, 'getNextersFromItem', '0x7eff122b94897ea5b0e2a9abf47b86337fafebdc', 1);
     // await call(tbAddr, tb, 'getNextersFromItem', '0x7eff122b94897ea5b0e2a9abf47b86337fafebdc', 2);
+    
     // await call(tbAddr, tb, 'getKeyFromItem', '0x7eff122b94897ea5b0e2a9abf47b86337fafebdc', '0x7eff122b94897ea5b0e2a9abf47b86337fafebdc', 1);
     
 }
