@@ -25,14 +25,26 @@ const sidv3 = require('./TreeBox/StandardIDType_V3.json');
 
 const tb = require('./TreeBox/TreeBox.json');
 
+const addr0 = '0x0000000000000000000000000000000000000000';
+const addr1 = '0x0000000000000000000000000000000000000001';
+const addr2 = '0x0000000000000000000000000000000000000002';
+
 // const web3 = new Web3('http://odyscluster-validator1.test.shie.com.cn/');
 const web3 = new Web3('http://127.0.0.1:1723');
 // const _from = '0x7eff122b94897ea5b0e2a9abf47b86337fafebdc'; // secp256k1
 // const _pass = "1234";
 // const _from = '0x2f689c3776c510a7ef56f441b4b5ed31a5da2275'; // sm2p256v1
 // const _pass = "12345";
-const _from = '0x5bE6Bbe4428B6fE3d2F2c0f3984BC41Ad94f4E8d';
+// const _from = '0x5bE6Bbe4428B6fE3d2F2c0f3984BC41Ad94f4E8d';
+// const _pass = '';
+// const _from = '0x198C1F50a75ffaa046A7180E12e55fcf005BDa81';
+// const _pass = '';
+const _from = '0xbf1dfFD25E1A101898791c87AeE683A3B65555D7';
 const _pass = '';
+// const _from = addr0;
+// const _pass = '';
+// const _from = '0x148D910aB6e59998553F3298f0c442e1d7632118';
+// const _pass = '';
 const _to = '';
 const _gas = 999999999999999;
 const _gasPrice = 20000000000;
@@ -176,14 +188,14 @@ unlock().then(()=> {
 // console.log('res --- ', web3.utils.hexToAscii('0x3200000000000000000000000000000000000000000000000000000000000000'))
 
 // 测试大型oz项目的TreeBox
-TreeBoxUnitTest()
+// TreeBoxUnitTest()
 // TreeBoxTest()
 
 // 测试合约之间互相调用的原子性
 // ContractsCallsTest()
 
 // 测试通过自己写的solintan的以太坊合约管理系统的oz的合约升级
-// UpgradeTest()
+UpgradeTest()
 
 // 测试require的返回报错信息
 // RequireErrorTest()
@@ -244,24 +256,22 @@ async function TreeBoxTest() {
 }
 
 async function TreeBoxUnitTest() {
-    const addr0 = '0x0000000000000000000000000000000000000000';
-    const addr1 = '0x0000000000000000000000000000000000000001';
-    const addr2 = '0x0000000000000000000000000000000000000002';
+    
     // 单独测试treebox
     const tbAddr = '0x85f14C7B46CaC95d367d096CD17D3B4fFB7a51bF';
     // 测试老中医说的call随便不用签名不用解锁
     // await call(tbAddr, tb, 'getUserInfo', '0x5bE6Bbe4428B6fE3d2F2c0f3984BC41Ad94f4E8d');
     // 管理员测试sintan1071 dev 获取tree
-    await call(tbAddr, tb, 'getTree');
-    await call(tbAddr, tb, 'getInserterFromItem', 3, '0x5bE6Bbe4428B6fE3d2F2c0f3984BC41Ad94f4E8d', '0xbf1dfFD25E1A101898791c87AeE683A3B65555D7');
+    // await call(tbAddr, tb, 'getTree');
+//    await call(tbAddr, tb, 'getInserterFromItem', 3, '0x5bE6Bbe4428B6fE3d2F2c0f3984BC41Ad94f4E8d', '0xbf1dfFD25E1A101898791c87AeE683A3B65555D7');
     // await call(tbAddr, tb, 'getInserterFromItem', 0, '0x5bE6Bbe4428B6fE3d2F2c0f3984BC41Ad94f4E8d', '0x198C1F50a75ffaa046A7180E12e55fcf005BDa81');
-    await call(tbAddr, tb, 'getInserterFromItem', 2, '0x5bE6Bbe4428B6fE3d2F2c0f3984BC41Ad94f4E8d', '0x198C1F50a75ffaa046A7180E12e55fcf005BDa81');
+//    await call(tbAddr, tb, 'getInserterFromItem', 2, '0x5bE6Bbe4428B6fE3d2F2c0f3984BC41Ad94f4E8d', '0x198C1F50a75ffaa046A7180E12e55fcf005BDa81');
     // await call(tbAddr, tb, 'getInserterFromItem', 1, '0x5bE6Bbe4428B6fE3d2F2c0f3984BC41Ad94f4E8d', '0xbf1dfFD25E1A101898791c87AeE683A3B65555D7');
-    await call(tbAddr, tb, 'getInserterFromItem', 4, '0x5bE6Bbe4428B6fE3d2F2c0f3984BC41Ad94f4E8d', '0xbf1dfFD25E1A101898791c87AeE683A3B65555D7');
-    await call(tbAddr, tb, 'getInserterFromItem', 4, '0x5bE6Bbe4428B6fE3d2F2c0f3984BC41Ad94f4E8d', '0x198C1F50a75ffaa046A7180E12e55fcf005BDa81');
+//    await call(tbAddr, tb, 'getInserterFromItem', 4, '0x5bE6Bbe4428B6fE3d2F2c0f3984BC41Ad94f4E8d', '0xbf1dfFD25E1A101898791c87AeE683A3B65555D7');
+//    await call(tbAddr, tb, 'getInserterFromItem', 4, '0x5bE6Bbe4428B6fE3d2F2c0f3984BC41Ad94f4E8d', '0x198C1F50a75ffaa046A7180E12e55fcf005BDa81');
     
     // 测试addItemToBox
-    // await send(tbAddr, tb, 'addItemToBox', addr1, 'k1241512435', 'http://111', ['0x198C1F50a75ffaa046A7180E12e55fcf005BDa81']);
+    // await send(tbAddr, tb, 'addItemToBox', 'http://你猜猜我是谁',  'key6666', '0x148D910aB6e59998553F3298f0c442e1d7632118', ['0xbf1dfFD25E1A101898791c87AeE683A3B65555D7']);
     //0.缺少参数测试 
     // await send(tbAddr, tb, 'addItemToBox', addr0, '', '', []);
     // await send(tbAddr, tb, 'addItemToBox', addr0, '', 'http://222', []);
@@ -279,42 +289,59 @@ async function TreeBoxUnitTest() {
     // 测试getItemsFromBox
     //0.错误参数测试
     // await call(tbAddr, tb, 'getItemsFromBox', '0x7eff122b94897ea5b0e2a9abf47b86337fafebdc'); // 不存在box
-    await call(tbAddr, tb, 'getItemIdsFromBox', _from); // 正常情况
+    // await call(tbAddr, tb, 'getItemIdsFromBox', _from); // 正常情况
     // await call(tbAddr, tb, 'getItemFromBoxById', 0, _from); // 错误情况
-    await call(tbAddr, tb, 'getItemFromBoxById', 3, _from); // 正常情况
-    await call(tbAddr, tb, 'getItemFromBoxById', 2, _from); // 正常情况
-    await call(tbAddr, tb, 'getItemFromBoxById', 4, _from); // 正常情况
+    // await call(tbAddr, tb, 'getItemFromBoxById', 3, _from); // 正常情况
+    // await call(tbAddr, tb, 'getItemFromBoxById', 2, _from); // 正常情况
+    // await call(tbAddr, tb, 'getItemFromBoxById', 4, _from); // 正常情况
     //1.用Receiver或者nexter获取
-    // await send(tbAddr, tb, 'pushUserStatus', '0x198C1F50a75ffaa046A7180E12e55fcf005BDa81');
+    // await send(tbAddr, tb, 'pushUserStatus', '0x148D910aB6e59998553F3298f0c442e1d7632118');
+    // await send(tbAddr, tb, 'pushUserStatus', '0xbf1dfFD25E1A101898791c87AeE683A3B65555D7');
     // await call(tbAddr, tb, 'getUserInfo', '0x198C1F50a75ffaa046A7180E12e55fcf005BDa81');
-    // await call(tbAddr, tb, 'getItemsFromBox', '0x5bE6Bbe4428B6fE3d2F2c0f3984BC41Ad94f4E8d'); // box在没有release的时候，nexter不可以获取到值
     //1.1 先让owner pushBoxStatus，然后nexter就可以获取到值
     // await send(tbAddr, tb, 'pushBoxStatus', '0x5bE6Bbe4428B6fE3d2F2c0f3984BC41Ad94f4E8d');
-    // await call(tbAddr, tb, 'getItemsFromBox', '0x5bE6Bbe4428B6fE3d2F2c0f3984BC41Ad94f4E8d'); // box release，nexter可以获取到值
 
     // 测试delItemsFromBox
     // 还原box状态
     // await send(tbAddr, tb, 'pushBoxStatus', '0x5bE6Bbe4428B6fE3d2F2c0f3984BC41Ad94f4E8d');
-    await call(tbAddr, tb, 'getUserInfo', '0x5bE6Bbe4428B6fE3d2F2c0f3984BC41Ad94f4E8d');
-    await call(tbAddr, tb, 'getUserInfo', '0x198C1F50a75ffaa046A7180E12e55fcf005BDa81');
-    await call(tbAddr, tb, 'getUserInfo', '0xbf1dfFD25E1A101898791c87AeE683A3B65555D7');
+    // await call(tbAddr, tb, 'getUserInfo', '0x5bE6Bbe4428B6fE3d2F2c0f3984BC41Ad94f4E8d');
+    // await call(tbAddr, tb, 'getUserInfo', '0x198C1F50a75ffaa046A7180E12e55fcf005BDa81');
+    // await call(tbAddr, tb, 'getUserInfo', '0xbf1dfFD25E1A101898791c87AeE683A3B65555D7');
     //0.错误参数测试
     // await send(tbAddr, tb, 'delItemFromBox', 3);
     //1.正确参数测试
     // let res = await send(tbAddr,tb, 'delItemFromBox', 3);
     // console.log('sintan1071 dev --- 事件返回结果: ', res.events.SinTan1071DevTEST.returnValues)
-    // await call(tbAddr, tb, 'getItemsFromBox', '0x5bE6Bbe4428B6fE3d2F2c0f3984BC41Ad94f4E8d'); // box release，nexter可以获取到值
+    // await call(tbAddr, tb, 'getItemFromBoxById', 2, _from); // 正常情况
+    // await call(tbAddr, tb, 'getItemFromBoxById', 4, '0x5bE6Bbe4428B6fE3d2F2c0f3984BC41Ad94f4E8d')
 
-    // await send(tbAddr, tb, 'addNextersToItem', '0x7eff122b94897ea5b0e2a9abf47b86337fafebdc', 0, ['0x2f689c3776c510a7ef56f441b4b5ed31a5da2275','0x3e43480d62eee37b3bad3e461a8336f324a1bf68']);
-    // await send(tbAddr, tb, 'addNextersToItem', '0x7eff122b94897ea5b0e2a9abf47b86337fafebdc', 1, ['0x2f689c3776c510a7ef56f441b4b5ed31a5da2275']);
-    // await send(tbAddr, tb, 'addNextersToItem', '0x7eff122b94897ea5b0e2a9abf47b86337fafebdc', 2, ['0x3e43480d62eee37b3bad3e461a8336f324a1bf68']);
+    // await send(tbAddr, tb, 'addNextersToItem', 2, '0x5bE6Bbe4428B6fE3d2F2c0f3984BC41Ad94f4E8d', [addr1, addr2]);
+    // await send(tbAddr, tb, 'addNextersToItem', 3, '0x5bE6Bbe4428B6fE3d2F2c0f3984BC41Ad94f4E8d', [addr1, addr2]);
     
-    // await call(tbAddr, tb, 'getNextersFromItem', '0x5bE6Bbe4428B6fE3d2F2c0f3984BC41Ad94f4E8d', 0);
-    // await call(tbAddr, tb, 'getNextersFromItem', '0x7eff122b94897ea5b0e2a9abf47b86337fafebdc', 1);
-    // await call(tbAddr, tb, 'getNextersFromItem', '0x7eff122b94897ea5b0e2a9abf47b86337fafebdc', 2);
+    // await call(tbAddr, tb, 'getNextersFromItem', 2, '0x5bE6Bbe4428B6fE3d2F2c0f3984BC41Ad94f4E8d');
+    // await call(tbAddr, tb, 'getNextersFromItem', 3, '0x5bE6Bbe4428B6fE3d2F2c0f3984BC41Ad94f4E8d');
+    // await call(tbAddr, tb, 'getNextersFromItem', 4, '0x5bE6Bbe4428B6fE3d2F2c0f3984BC41Ad94f4E8d');
     
-    // await call(tbAddr, tb, 'getKeyFromItem', '0x7eff122b94897ea5b0e2a9abf47b86337fafebdc', '0x7eff122b94897ea5b0e2a9abf47b86337fafebdc', 1);
+    // await call(tbAddr, tb, 'getKeyFromItem', 2, '0x5bE6Bbe4428B6fE3d2F2c0f3984BC41Ad94f4E8d', '0xbf1dfFD25E1A101898791c87AeE683A3B65555D7');
+    // await call(tbAddr, tb, 'getKeyFromItem', 4, '0x5bE6Bbe4428B6fE3d2F2c0f3984BC41Ad94f4E8d', '0xbf1dfFD25E1A101898791c87AeE683A3B65555D7');
+    // await call(tbAddr, tb, 'getKeyFromItem', 5, '0x5bE6Bbe4428B6fE3d2F2c0f3984BC41Ad94f4E8d', '0x5bE6Bbe4428B6fE3d2F2c0f3984BC41Ad94f4E8d');
+    // await call(tbAddr, tb, 'getKeyFromItem', 5, '0x5bE6Bbe4428B6fE3d2F2c0f3984BC41Ad94f4E8d', '0xbf1dfFD25E1A101898791c87AeE683A3B65555D7');
+    // await call(tbAddr, tb, 'getKeyFromItem', 5, '0x5bE6Bbe4428B6fE3d2F2c0f3984BC41Ad94f4E8d', '0x198C1F50a75ffaa046A7180E12e55fcf005BDa81');
     
+    // 测试release后receiver来增加receiver
+    // await send(tbAddr, tb, 'addNextersToItem', 5, '0x5bE6Bbe4428B6fE3d2F2c0f3984BC41Ad94f4E8d', ['0xbf1dfFD25E1A101898791c87AeE683A3B65555D7']);
+    // await call(tbAddr, tb, 'getNextersFromItem', 5, '0x5bE6Bbe4428B6fE3d2F2c0f3984BC41Ad94f4E8d');
+    // await send(tbAddr, tb, 'delNextersFromItem', 5, '0x5bE6Bbe4428B6fE3d2F2c0f3984BC41Ad94f4E8d', ['0xbf1dfFD25E1A101898791c87AeE683A3B65555D7']);
+    // await send(tbAddr, tb, 'delNextersFromItem', 5, '0x5bE6Bbe4428B6fE3d2F2c0f3984BC41Ad94f4E8d', ['0x198C1F50a75ffaa046A7180E12e55fcf005BDa81']);
+    
+    // await call(tbAddr, tb, 'getPrevers'); // 测试不同用户获取自己的prever
+    await call(tbAddr, tb, 'getItemIdsFromBox', '0x5bE6Bbe4428B6fE3d2F2c0f3984BC41Ad94f4E8d'); // 正常情况
+    await call(tbAddr, tb, 'getItemIdsFromBox', '0x198C1F50a75ffaa046A7180E12e55fcf005BDa81'); // 正常情况
+    await call(tbAddr, tb, 'getItemFromBoxById', 2, '0x5bE6Bbe4428B6fE3d2F2c0f3984BC41Ad94f4E8d'); // 正常情况
+    await call(tbAddr, tb, 'getItemFromBoxById', 4, '0x5bE6Bbe4428B6fE3d2F2c0f3984BC41Ad94f4E8d'); // 正常情况
+    await call(tbAddr, tb, 'getItemFromBoxById', 5, '0x5bE6Bbe4428B6fE3d2F2c0f3984BC41Ad94f4E8d'); // 正常情况
+    await call(tbAddr, tb, 'getItemFromBoxById', 1, '0x198C1F50a75ffaa046A7180E12e55fcf005BDa81'); // 正常情况
+
 }
 
 async function ContractsCallsTest() {
@@ -334,7 +361,10 @@ async function ContractsCallsTest() {
 }
 
 async function UpgradeTest() {
-    const addr = '0x289ffa3E535A79a4645ecA8a63A4e907FF5AeF78';
+    const addr = '0x9Fa3Bd12bF5E66cE0d5340ce78C44B25C545e9f3';
+
+    await call(addr, sid, 'getTEST');
+
     // modifier test
     // await send(addr, sid, 'setUserIdType', '急急急');
     // await call(addr, sid, 'getUserIdType', '居民身份证');
