@@ -195,10 +195,10 @@ unlock().then(()=> {
 // ContractsCallsTest()
 
 // 测试通过自己写的solintan的以太坊合约管理系统的oz的合约升级
-UpgradeTest()
+// UpgradeTest()
 
 // 测试require的返回报错信息
-// RequireErrorTest()
+RequireErrorTest()
 /******************************************↑↑↑测试区域↑↑↑*****************************************************/
 })
 
@@ -397,12 +397,20 @@ async function UpgradeTest() {
 }
 
 async function RequireErrorTest() {
-    console.log('web3 version: ', web3.version);
+    // console.log('web3 version: ', web3.version);
 
     let cAddr = await deploy(testCJ);
+    // let cAddr = '0x0053F453958D4a54Dc8d784Ff4D60F460525DE99';
 
-    await send(cAddr, testCJ, 'set', '666');
-    await call(cAddr, testCJ, 'get');
+    // 0000000000000000000000000000000000000000000000000000000000000020
+    // 0000000000000000000000000000000000000000000000000000000000000003
+    // 3132330000000000000000000000000000000000000000000000000000000000
+
+    // console.log('funcSig: ', web3.utils.keccak256('setString(string)'));
+    // console.log('data bytes32: ', web3.utils.utf8ToHex('123'));
+
+    await send(cAddr, testCJ, 'setString', '123');
+    await call(cAddr, testCJ, 'getTxData');
 }
 
 /*******************************************
