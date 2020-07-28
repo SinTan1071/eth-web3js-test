@@ -6,17 +6,67 @@
           {
             "indexed": false,
             "internalType": "address",
-            "name": "sender",
+            "name": "owner",
             "type": "address"
           },
           {
             "indexed": false,
             "internalType": "address",
-            "name": "instantiation",
+            "name": "rootUser",
+            "type": "address"
+          },
+          {
+            "indexed": false,
+            "internalType": "address",
+            "name": "proxy",
+            "type": "address"
+          },
+          {
+            "indexed": false,
+            "internalType": "address",
+            "name": "implementation",
+            "type": "address"
+          },
+          {
+            "indexed": false,
+            "internalType": "address",
+            "name": "proxyAdmin",
+            "type": "address"
+          },
+          {
+            "indexed": false,
+            "internalType": "bytes32",
+            "name": "byteCode256Hash",
+            "type": "bytes32"
+          }
+        ],
+        "name": "EventContractInstantiation",
+        "type": "event"
+      },
+      {
+        "anonymous": false,
+        "inputs": [
+          {
+            "indexed": false,
+            "internalType": "address",
+            "name": "user",
             "type": "address"
           }
         ],
-        "name": "ContractInstantiation",
+        "name": "EventOwnerAllowUserCreateInst",
+        "type": "event"
+      },
+      {
+        "anonymous": false,
+        "inputs": [
+          {
+            "indexed": false,
+            "internalType": "address",
+            "name": "user",
+            "type": "address"
+          }
+        ],
+        "name": "EventUserApplyForCreateInst",
         "type": "event"
       },
       {
@@ -39,11 +89,22 @@
         "type": "event"
       },
       {
+        "constant": false,
         "inputs": [
           {
             "internalType": "address",
             "name": "manager",
             "type": "address"
+          },
+          {
+            "internalType": "address",
+            "name": "assetFAddr",
+            "type": "address"
+          },
+          {
+            "internalType": "bytes32",
+            "name": "byteCode256Hash",
+            "type": "bytes32"
           }
         ],
         "name": "create",
@@ -54,10 +115,110 @@
             "type": "address"
           }
         ],
+        "payable": false,
         "stateMutability": "nonpayable",
         "type": "function"
       },
       {
+        "constant": true,
+        "inputs": [
+          {
+            "internalType": "address",
+            "name": "rootUser",
+            "type": "address"
+          }
+        ],
+        "name": "getAllInstantiations",
+        "outputs": [
+          {
+            "internalType": "address[]",
+            "name": "proxyInsts",
+            "type": "address[]"
+          }
+        ],
+        "payable": false,
+        "stateMutability": "view",
+        "type": "function"
+      },
+      {
+        "constant": true,
+        "inputs": [],
+        "name": "getAllRootUsers",
+        "outputs": [
+          {
+            "internalType": "address[]",
+            "name": "rootUsersAddr",
+            "type": "address[]"
+          }
+        ],
+        "payable": false,
+        "stateMutability": "view",
+        "type": "function"
+      },
+      {
+        "constant": true,
+        "inputs": [],
+        "name": "getCreateInstApplyUsers",
+        "outputs": [
+          {
+            "internalType": "address[]",
+            "name": "",
+            "type": "address[]"
+          }
+        ],
+        "payable": false,
+        "stateMutability": "view",
+        "type": "function"
+      },
+      {
+        "constant": true,
+        "inputs": [
+          {
+            "internalType": "address",
+            "name": "impl",
+            "type": "address"
+          }
+        ],
+        "name": "getImplTimeAndHash",
+        "outputs": [
+          {
+            "internalType": "uint256",
+            "name": "timestamp",
+            "type": "uint256"
+          },
+          {
+            "internalType": "bytes32",
+            "name": "byteCode256Hash",
+            "type": "bytes32"
+          }
+        ],
+        "payable": false,
+        "stateMutability": "view",
+        "type": "function"
+      },
+      {
+        "constant": true,
+        "inputs": [
+          {
+            "internalType": "address",
+            "name": "proxy",
+            "type": "address"
+          }
+        ],
+        "name": "getImplementations",
+        "outputs": [
+          {
+            "internalType": "address[]",
+            "name": "Implementations",
+            "type": "address[]"
+          }
+        ],
+        "payable": false,
+        "stateMutability": "view",
+        "type": "function"
+      },
+      {
+        "constant": true,
         "inputs": [
           {
             "internalType": "address",
@@ -73,15 +234,64 @@
             "type": "uint256"
           }
         ],
+        "payable": false,
         "stateMutability": "view",
         "type": "function"
       },
       {
+        "constant": true,
         "inputs": [
           {
+            "internalType": "address",
+            "name": "proxy",
+            "type": "address"
+          }
+        ],
+        "name": "getProxyAdmin",
+        "outputs": [
+          {
+            "internalType": "address",
+            "name": "proxyAdmin",
+            "type": "address"
+          }
+        ],
+        "payable": false,
+        "stateMutability": "view",
+        "type": "function"
+      },
+      {
+        "constant": true,
+        "inputs": [
+          {
+            "internalType": "address",
+            "name": "",
+            "type": "address"
+          }
+        ],
+        "name": "implementationToTimeAndHash",
+        "outputs": [
+          {
+            "internalType": "uint256",
+            "name": "timestamp",
+            "type": "uint256"
+          },
+          {
             "internalType": "bytes32",
-            "name": "_puid",
+            "name": "byteCode256Hash",
             "type": "bytes32"
+          }
+        ],
+        "payable": false,
+        "stateMutability": "view",
+        "type": "function"
+      },
+      {
+        "constant": false,
+        "inputs": [
+          {
+            "internalType": "string",
+            "name": "_pName",
+            "type": "string"
           },
           {
             "internalType": "address",
@@ -91,10 +301,27 @@
         ],
         "name": "initialize",
         "outputs": [],
+        "payable": false,
         "stateMutability": "nonpayable",
         "type": "function"
       },
       {
+        "constant": false,
+        "inputs": [
+          {
+            "internalType": "address",
+            "name": "sender",
+            "type": "address"
+          }
+        ],
+        "name": "initialize",
+        "outputs": [],
+        "payable": false,
+        "stateMutability": "nonpayable",
+        "type": "function"
+      },
+      {
+        "constant": false,
         "inputs": [
           {
             "internalType": "address[]",
@@ -102,12 +329,61 @@
             "type": "address[]"
           }
         ],
-        "name": "instReportUserAdded",
+        "name": "instReportUserJoined",
         "outputs": [],
+        "payable": false,
         "stateMutability": "nonpayable",
         "type": "function"
       },
       {
+        "constant": true,
+        "inputs": [
+          {
+            "internalType": "address",
+            "name": "",
+            "type": "address"
+          },
+          {
+            "internalType": "uint256",
+            "name": "",
+            "type": "uint256"
+          }
+        ],
+        "name": "instatiationToImplementations",
+        "outputs": [
+          {
+            "internalType": "address",
+            "name": "",
+            "type": "address"
+          }
+        ],
+        "payable": false,
+        "stateMutability": "view",
+        "type": "function"
+      },
+      {
+        "constant": true,
+        "inputs": [
+          {
+            "internalType": "address",
+            "name": "",
+            "type": "address"
+          }
+        ],
+        "name": "instatiationToProxyAdmin",
+        "outputs": [
+          {
+            "internalType": "address",
+            "name": "",
+            "type": "address"
+          }
+        ],
+        "payable": false,
+        "stateMutability": "view",
+        "type": "function"
+      },
+      {
+        "constant": true,
         "inputs": [
           {
             "internalType": "address",
@@ -123,10 +399,27 @@
             "type": "bool"
           }
         ],
+        "payable": false,
         "stateMutability": "view",
         "type": "function"
       },
       {
+        "constant": true,
+        "inputs": [],
+        "name": "isOwner",
+        "outputs": [
+          {
+            "internalType": "bool",
+            "name": "",
+            "type": "bool"
+          }
+        ],
+        "payable": false,
+        "stateMutability": "view",
+        "type": "function"
+      },
+      {
+        "constant": true,
         "inputs": [],
         "name": "owner",
         "outputs": [
@@ -136,10 +429,27 @@
             "type": "address"
           }
         ],
+        "payable": false,
         "stateMutability": "view",
         "type": "function"
       },
       {
+        "constant": false,
+        "inputs": [
+          {
+            "internalType": "address",
+            "name": "user",
+            "type": "address"
+          }
+        ],
+        "name": "ownerAllowUserCreateInst",
+        "outputs": [],
+        "payable": false,
+        "stateMutability": "nonpayable",
+        "type": "function"
+      },
+      {
+        "constant": true,
         "inputs": [],
         "name": "plistAddr",
         "outputs": [
@@ -149,30 +459,51 @@
             "type": "address"
           }
         ],
+        "payable": false,
         "stateMutability": "view",
         "type": "function"
       },
       {
+        "constant": true,
         "inputs": [],
         "name": "puid",
         "outputs": [
           {
-            "internalType": "bytes32",
+            "internalType": "uint256",
             "name": "",
-            "type": "bytes32"
+            "type": "uint256"
           }
         ],
+        "payable": false,
         "stateMutability": "view",
         "type": "function"
       },
       {
+        "constant": false,
         "inputs": [],
         "name": "renounceOwnership",
         "outputs": [],
+        "payable": false,
         "stateMutability": "nonpayable",
         "type": "function"
       },
       {
+        "constant": true,
+        "inputs": [],
+        "name": "sintan1071devTESTrealProjectAddr",
+        "outputs": [
+          {
+            "internalType": "address",
+            "name": "",
+            "type": "address"
+          }
+        ],
+        "payable": false,
+        "stateMutability": "view",
+        "type": "function"
+      },
+      {
+        "constant": false,
         "inputs": [
           {
             "internalType": "address",
@@ -187,10 +518,12 @@
         ],
         "name": "transferInstOwnership",
         "outputs": [],
+        "payable": false,
         "stateMutability": "nonpayable",
         "type": "function"
       },
       {
+        "constant": false,
         "inputs": [
           {
             "internalType": "address",
@@ -200,10 +533,42 @@
         ],
         "name": "transferOwnership",
         "outputs": [],
+        "payable": false,
         "stateMutability": "nonpayable",
         "type": "function"
       },
       {
+        "constant": false,
+        "inputs": [
+          {
+            "internalType": "uint256",
+            "name": "timestamp",
+            "type": "uint256"
+          },
+          {
+            "internalType": "address",
+            "name": "newImpl",
+            "type": "address"
+          },
+          {
+            "internalType": "address",
+            "name": "proxy",
+            "type": "address"
+          },
+          {
+            "internalType": "bytes32",
+            "name": "byteCode256Hash",
+            "type": "bytes32"
+          }
+        ],
+        "name": "updateImpls",
+        "outputs": [],
+        "payable": false,
+        "stateMutability": "nonpayable",
+        "type": "function"
+      },
+      {
+        "constant": false,
         "inputs": [
           {
             "internalType": "address",
@@ -213,23 +578,21 @@
         ],
         "name": "updatePlistAddr",
         "outputs": [],
+        "payable": false,
         "stateMutability": "nonpayable",
         "type": "function"
       },
       {
-        "inputs": [
-          {
-            "internalType": "bytes32",
-            "name": "_puid",
-            "type": "bytes32"
-          }
-        ],
-        "name": "updatePuid",
+        "constant": false,
+        "inputs": [],
+        "name": "userApplyForCreateInst",
         "outputs": [],
+        "payable": false,
         "stateMutability": "nonpayable",
         "type": "function"
       },
       {
+        "constant": true,
         "inputs": [
           {
             "internalType": "address",
@@ -250,6 +613,7 @@
             "type": "address"
           }
         ],
+        "payable": false,
         "stateMutability": "view",
         "type": "function"
       }

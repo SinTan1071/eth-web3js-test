@@ -30,17 +30,17 @@ const addr1 = '0x0000000000000000000000000000000000000001';
 const addr2 = '0x0000000000000000000000000000000000000002';
 
 // const web3 = new Web3('http://odyscluster-validator1.test.shie.com.cn/');
-const web3 = new Web3('http://127.0.0.1:1723');
-// const _from = '0x7eff122b94897ea5b0e2a9abf47b86337fafebdc'; // secp256k1
-// const _pass = "1234";
+const web3 = new Web3('http://127.0.0.1:8545');
+const _from = '0x7eff122b94897ea5b0e2a9abf47b86337fafebdc'; // secp256k1
+const _pass = "1234";
 // const _from = '0x2f689c3776c510a7ef56f441b4b5ed31a5da2275'; // sm2p256v1
 // const _pass = "12345";
 // const _from = '0x5bE6Bbe4428B6fE3d2F2c0f3984BC41Ad94f4E8d';
 // const _pass = '';
 // const _from = '0x198C1F50a75ffaa046A7180E12e55fcf005BDa81';
 // const _pass = '';
-const _from = '0xbf1dfFD25E1A101898791c87AeE683A3B65555D7';
-const _pass = '';
+// const _from = '0xbf1dfFD25E1A101898791c87AeE683A3B65555D7';
+// const _pass = '';
 // const _from = addr0;
 // const _pass = '';
 // const _from = '0x148D910aB6e59998553F3298f0c442e1d7632118';
@@ -94,6 +94,7 @@ async function call(contractAddr, contractJson, methodName, ...params) {
 async function send(contractAddr, contractJson, methodName, ...params) {
     var contractInst = new web3.eth.Contract(contractJson.abi, contractAddr);
     var contractInstMethod = !!params?contractInst.methods[methodName](...params):contractInst.methods[methodName]();
+    console.log('sintan1071 dev --- 检查abiEncode: ', contractInstMethod.encodeABI())
     var receipt = await contractInstMethod.send({
         from: _from,
         gas: _gas,
@@ -189,7 +190,7 @@ unlock().then(()=> {
 
 // 测试大型oz项目的TreeBox
 // TreeBoxUnitTest()
-// TreeBoxTest()
+TreeBoxTest()
 
 // 测试合约之间互相调用的原子性
 // ContractsCallsTest()
@@ -198,7 +199,7 @@ unlock().then(()=> {
 // UpgradeTest()
 
 // 测试require的返回报错信息
-RequireErrorTest()
+// RequireErrorTest()
 /******************************************↑↑↑测试区域↑↑↑*****************************************************/
 })
 
@@ -253,6 +254,60 @@ async function TreeBoxTest() {
     // let r2 = await call(plAddr, plContractJson, 'getProjectInfoByID', web3.utils.utf8ToHex('1'));
     // console.log('results --- ', r1, r2);
 
+
+    // 测试通过工厂合约升级项目后是否可以获取到事件
+    // console.log('sintan1071 dev --- 看下hash', web3.utils.keccak256('666'));
+    // await  send('0xaf3ede071fb0ecd9c747e33425c3a7c3eb445c99', abfContractJson,
+    //             'updateImpls',
+    //             new Date().getTime(),
+    //             addr1,
+    //             '0x75e83f0616022fe7d03f920eb516b3142a0c29fe',
+    //             web3.utils.keccak256('666').toLowerCase()
+    //         );
+
+    // 测试可升级的通过代理合约调用其他合约的msgSender是代理合约还是实例合约
+    // console.log('sintan1071 dev --- funcSig: ', web3.utils.keccak256('initialize(address,address,address)'));
+
+    // await send('0xd04f7E43A3772326013e66543df90279343f660a', abContractJson,
+    //     'initialize',
+    //     addr1,
+    //     '0xa1f2641b8248a05dee3b3a27a3768b30d265465b',
+    //     addr0
+    // );
+
+    // await send('0x59f7636fa67e07fb347f6b6073f55f3822b82145', sid,
+    //     'initialize'
+    // );
+
+    await send('0x41611df22e0072d1e23662f6ae1bd6507b10213e', abContractJson,
+                'addManager',
+                [addr1]
+            );
+
+    await call('0x41611df22e0072d1e23662f6ae1bd6507b10213e', abContractJson,
+                'owner' // 这个应该是工厂
+            );
+
+    // 验证project的值
+    await call('0x41611df22e0072d1e23662f6ae1bd6507b10213e', abContractJson,
+                'userActions',
+                0
+            );
+
+    // 验证工厂的值        
+    await call('0xf8d38d754bf39e5997856c1ed89fa1b84ebab31c', abfContractJson,
+                'sintan1071devTESTrealProjectAddr'
+            );  
+            
+    // 验证pList的值        
+    await call('0x278d35749b2a4809b3dad029ca1d07c240583d2b', plContractJson,
+                'sintan1071devTESTrealFactoryAddr'
+            );
+            
+    await call('0x278d35749b2a4809b3dad029ca1d07c240583d2b', plContractJson,
+                'getProjectInfoByID',
+                1
+            );  
 }
 
 async function TreeBoxUnitTest() {

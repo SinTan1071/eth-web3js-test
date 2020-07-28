@@ -4,6 +4,56 @@
         "anonymous": false,
         "inputs": [
           {
+            "indexed": false,
+            "internalType": "bool",
+            "name": "ok",
+            "type": "bool"
+          },
+          {
+            "indexed": false,
+            "internalType": "address",
+            "name": "asset",
+            "type": "address"
+          },
+          {
+            "indexed": false,
+            "internalType": "address[]",
+            "name": "users",
+            "type": "address[]"
+          }
+        ],
+        "name": "AddedUsersAsset",
+        "type": "event"
+      },
+      {
+        "anonymous": false,
+        "inputs": [
+          {
+            "indexed": false,
+            "internalType": "bool",
+            "name": "ok",
+            "type": "bool"
+          },
+          {
+            "indexed": false,
+            "internalType": "address",
+            "name": "asset",
+            "type": "address"
+          },
+          {
+            "indexed": false,
+            "internalType": "address[]",
+            "name": "users",
+            "type": "address[]"
+          }
+        ],
+        "name": "DeletedUsersAsset",
+        "type": "event"
+      },
+      {
+        "anonymous": false,
+        "inputs": [
+          {
             "indexed": true,
             "internalType": "address",
             "name": "previousOwner",
@@ -23,172 +73,176 @@
         "anonymous": false,
         "inputs": [
           {
-            "indexed": true,
-            "internalType": "bytes32",
-            "name": "role",
-            "type": "bytes32"
-          },
-          {
-            "indexed": true,
-            "internalType": "address",
-            "name": "account",
-            "type": "address"
-          },
-          {
-            "indexed": true,
-            "internalType": "address",
-            "name": "sender",
-            "type": "address"
+            "indexed": false,
+            "internalType": "bool",
+            "name": "OkMa",
+            "type": "bool"
           }
         ],
-        "name": "RoleGranted",
+        "name": "SinTan1071Dev",
         "type": "event"
       },
       {
-        "anonymous": false,
+        "constant": false,
         "inputs": [
           {
-            "indexed": true,
-            "internalType": "bytes32",
-            "name": "role",
-            "type": "bytes32"
-          },
-          {
-            "indexed": true,
             "internalType": "address",
-            "name": "account",
-            "type": "address"
-          },
-          {
-            "indexed": true,
-            "internalType": "address",
-            "name": "sender",
+            "name": "factoryAddr",
             "type": "address"
           }
         ],
-        "name": "RoleRevoked",
-        "type": "event"
-      },
-      {
-        "inputs": [],
-        "name": "DEFAULT_ADMIN_ROLE",
-        "outputs": [
-          {
-            "internalType": "bytes32",
-            "name": "",
-            "type": "bytes32"
-          }
-        ],
-        "stateMutability": "view",
-        "type": "function"
-      },
-      {
-        "inputs": [],
-        "name": "MANAGER_ROLE",
-        "outputs": [
-          {
-            "internalType": "bytes32",
-            "name": "",
-            "type": "bytes32"
-          }
-        ],
-        "stateMutability": "view",
-        "type": "function"
-      },
-      {
-        "inputs": [
-          {
-            "internalType": "bytes32",
-            "name": "role",
-            "type": "bytes32"
-          }
-        ],
-        "name": "getRoleAdmin",
-        "outputs": [
-          {
-            "internalType": "bytes32",
-            "name": "",
-            "type": "bytes32"
-          }
-        ],
-        "stateMutability": "view",
-        "type": "function"
-      },
-      {
-        "inputs": [
-          {
-            "internalType": "bytes32",
-            "name": "role",
-            "type": "bytes32"
-          },
-          {
-            "internalType": "uint256",
-            "name": "index",
-            "type": "uint256"
-          }
-        ],
-        "name": "getRoleMember",
-        "outputs": [
-          {
-            "internalType": "address",
-            "name": "",
-            "type": "address"
-          }
-        ],
-        "stateMutability": "view",
-        "type": "function"
-      },
-      {
-        "inputs": [
-          {
-            "internalType": "bytes32",
-            "name": "role",
-            "type": "bytes32"
-          }
-        ],
-        "name": "getRoleMemberCount",
-        "outputs": [
-          {
-            "internalType": "uint256",
-            "name": "",
-            "type": "uint256"
-          }
-        ],
-        "stateMutability": "view",
-        "type": "function"
-      },
-      {
-        "inputs": [
-          {
-            "internalType": "bytes32",
-            "name": "role",
-            "type": "bytes32"
-          },
-          {
-            "internalType": "address",
-            "name": "account",
-            "type": "address"
-          }
-        ],
-        "name": "grantRole",
+        "name": "Project_init",
         "outputs": [],
+        "payable": false,
         "stateMutability": "nonpayable",
         "type": "function"
       },
       {
+        "constant": false,
         "inputs": [
           {
-            "internalType": "bytes32",
-            "name": "role",
-            "type": "bytes32"
-          },
+            "internalType": "address[]",
+            "name": "users",
+            "type": "address[]"
+          }
+        ],
+        "name": "addManager",
+        "outputs": [],
+        "payable": false,
+        "stateMutability": "nonpayable",
+        "type": "function"
+      },
+      {
+        "constant": false,
+        "inputs": [
+          {
+            "internalType": "address[]",
+            "name": "users",
+            "type": "address[]"
+          }
+        ],
+        "name": "addUsersAsset",
+        "outputs": [],
+        "payable": false,
+        "stateMutability": "nonpayable",
+        "type": "function"
+      },
+      {
+        "constant": true,
+        "inputs": [],
+        "name": "assetFactoryAddress",
+        "outputs": [
           {
             "internalType": "address",
-            "name": "account",
+            "name": "",
             "type": "address"
           }
         ],
-        "name": "hasRole",
+        "payable": false,
+        "stateMutability": "view",
+        "type": "function"
+      },
+      {
+        "constant": false,
+        "inputs": [
+          {
+            "internalType": "address[]",
+            "name": "users",
+            "type": "address[]"
+          }
+        ],
+        "name": "delUsersAsset",
+        "outputs": [],
+        "payable": false,
+        "stateMutability": "nonpayable",
+        "type": "function"
+      },
+      {
+        "constant": true,
+        "inputs": [
+          {
+            "internalType": "address",
+            "name": "user",
+            "type": "address"
+          }
+        ],
+        "name": "getAssetsByUser",
+        "outputs": [
+          {
+            "internalType": "address[]",
+            "name": "assets",
+            "type": "address[]"
+          }
+        ],
+        "payable": false,
+        "stateMutability": "view",
+        "type": "function"
+      },
+      {
+        "constant": true,
+        "inputs": [
+          {
+            "internalType": "address",
+            "name": "asset",
+            "type": "address"
+          }
+        ],
+        "name": "getUsersByAsset",
+        "outputs": [
+          {
+            "internalType": "address[]",
+            "name": "users",
+            "type": "address[]"
+          }
+        ],
+        "payable": false,
+        "stateMutability": "view",
+        "type": "function"
+      },
+      {
+        "constant": false,
+        "inputs": [
+          {
+            "internalType": "address",
+            "name": "manager",
+            "type": "address"
+          },
+          {
+            "internalType": "address",
+            "name": "myFactoryAddr",
+            "type": "address"
+          },
+          {
+            "internalType": "address",
+            "name": "assetFAddr",
+            "type": "address"
+          }
+        ],
+        "name": "initialize",
+        "outputs": [],
+        "payable": false,
+        "stateMutability": "nonpayable",
+        "type": "function"
+      },
+      {
+        "constant": false,
+        "inputs": [
+          {
+            "internalType": "address",
+            "name": "sender",
+            "type": "address"
+          }
+        ],
+        "name": "initialize",
+        "outputs": [],
+        "payable": false,
+        "stateMutability": "nonpayable",
+        "type": "function"
+      },
+      {
+        "constant": true,
+        "inputs": [],
+        "name": "isOwner",
         "outputs": [
           {
             "internalType": "bool",
@@ -196,23 +250,27 @@
             "type": "bool"
           }
         ],
+        "payable": false,
         "stateMutability": "view",
         "type": "function"
       },
       {
-        "inputs": [
+        "constant": true,
+        "inputs": [],
+        "name": "myFactoryAddress",
+        "outputs": [
           {
             "internalType": "address",
-            "name": "manager",
+            "name": "",
             "type": "address"
           }
         ],
-        "name": "initialize",
-        "outputs": [],
-        "stateMutability": "nonpayable",
+        "payable": false,
+        "stateMutability": "view",
         "type": "function"
       },
       {
+        "constant": true,
         "inputs": [],
         "name": "owner",
         "outputs": [
@@ -222,53 +280,21 @@
             "type": "address"
           }
         ],
+        "payable": false,
         "stateMutability": "view",
         "type": "function"
       },
       {
+        "constant": false,
         "inputs": [],
         "name": "renounceOwnership",
         "outputs": [],
+        "payable": false,
         "stateMutability": "nonpayable",
         "type": "function"
       },
       {
-        "inputs": [
-          {
-            "internalType": "bytes32",
-            "name": "role",
-            "type": "bytes32"
-          },
-          {
-            "internalType": "address",
-            "name": "account",
-            "type": "address"
-          }
-        ],
-        "name": "renounceRole",
-        "outputs": [],
-        "stateMutability": "nonpayable",
-        "type": "function"
-      },
-      {
-        "inputs": [
-          {
-            "internalType": "bytes32",
-            "name": "role",
-            "type": "bytes32"
-          },
-          {
-            "internalType": "address",
-            "name": "account",
-            "type": "address"
-          }
-        ],
-        "name": "revokeRole",
-        "outputs": [],
-        "stateMutability": "nonpayable",
-        "type": "function"
-      },
-      {
+        "constant": false,
         "inputs": [
           {
             "internalType": "address",
@@ -278,7 +304,104 @@
         ],
         "name": "transferOwnership",
         "outputs": [],
+        "payable": false,
         "stateMutability": "nonpayable",
+        "type": "function"
+      },
+      {
+        "constant": false,
+        "inputs": [
+          {
+            "internalType": "address",
+            "name": "assetFAddr",
+            "type": "address"
+          }
+        ],
+        "name": "updateAssetFactoryAddress",
+        "outputs": [],
+        "payable": false,
+        "stateMutability": "nonpayable",
+        "type": "function"
+      },
+      {
+        "constant": false,
+        "inputs": [
+          {
+            "internalType": "address",
+            "name": "myFactoryAddr",
+            "type": "address"
+          }
+        ],
+        "name": "updateMyFactoryAddr",
+        "outputs": [],
+        "payable": false,
+        "stateMutability": "nonpayable",
+        "type": "function"
+      },
+      {
+        "constant": true,
+        "inputs": [],
+        "name": "userActionCount",
+        "outputs": [
+          {
+            "internalType": "uint256",
+            "name": "",
+            "type": "uint256"
+          }
+        ],
+        "payable": false,
+        "stateMutability": "view",
+        "type": "function"
+      },
+      {
+        "constant": true,
+        "inputs": [
+          {
+            "internalType": "uint256",
+            "name": "",
+            "type": "uint256"
+          }
+        ],
+        "name": "userActions",
+        "outputs": [
+          {
+            "internalType": "address",
+            "name": "originSender",
+            "type": "address"
+          },
+          {
+            "internalType": "address",
+            "name": "sender",
+            "type": "address"
+          },
+          {
+            "internalType": "address",
+            "name": "destination",
+            "type": "address"
+          },
+          {
+            "internalType": "uint256",
+            "name": "value",
+            "type": "uint256"
+          },
+          {
+            "internalType": "bytes",
+            "name": "data",
+            "type": "bytes"
+          },
+          {
+            "internalType": "bool",
+            "name": "executed",
+            "type": "bool"
+          },
+          {
+            "internalType": "bool",
+            "name": "fromInternal",
+            "type": "bool"
+          }
+        ],
+        "payable": false,
+        "stateMutability": "view",
         "type": "function"
       }
     ],

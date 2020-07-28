@@ -24,9 +24,9 @@
         "inputs": [
           {
             "indexed": false,
-            "internalType": "bytes32",
+            "internalType": "uint256",
             "name": "_puid",
-            "type": "bytes32"
+            "type": "uint256"
           },
           {
             "indexed": false,
@@ -43,9 +43,9 @@
         "inputs": [
           {
             "indexed": false,
-            "internalType": "bytes32",
+            "internalType": "uint256",
             "name": "_puid",
-            "type": "bytes32"
+            "type": "uint256"
           },
           {
             "indexed": false,
@@ -58,11 +58,54 @@
         "type": "event"
       },
       {
+        "constant": true,
         "inputs": [
           {
-            "internalType": "bytes32",
+            "internalType": "address",
+            "name": "_pFAddr",
+            "type": "address"
+          }
+        ],
+        "name": "getProjectIdByFactory",
+        "outputs": [
+          {
+            "internalType": "uint256",
+            "name": "",
+            "type": "uint256"
+          }
+        ],
+        "payable": false,
+        "stateMutability": "view",
+        "type": "function"
+      },
+      {
+        "constant": true,
+        "inputs": [
+          {
+            "internalType": "string",
+            "name": "_pName",
+            "type": "string"
+          }
+        ],
+        "name": "getProjectIdByName",
+        "outputs": [
+          {
+            "internalType": "uint256",
+            "name": "",
+            "type": "uint256"
+          }
+        ],
+        "payable": false,
+        "stateMutability": "view",
+        "type": "function"
+      },
+      {
+        "constant": true,
+        "inputs": [
+          {
+            "internalType": "uint256",
             "name": "_puid",
-            "type": "bytes32"
+            "type": "uint256"
           }
         ],
         "name": "getProjectInfoByID",
@@ -78,15 +121,17 @@
             "type": "address[]"
           }
         ],
+        "payable": false,
         "stateMutability": "view",
         "type": "function"
       },
       {
+        "constant": true,
         "inputs": [
           {
-            "internalType": "bytes32",
+            "internalType": "uint256",
             "name": "_puid",
-            "type": "bytes32"
+            "type": "uint256"
           }
         ],
         "name": "getProjectInterfaceByID",
@@ -97,17 +142,51 @@
             "type": "address"
           }
         ],
+        "payable": false,
         "stateMutability": "view",
         "type": "function"
       },
       {
+        "constant": false,
         "inputs": [],
         "name": "initialize",
         "outputs": [],
+        "payable": false,
         "stateMutability": "nonpayable",
         "type": "function"
       },
       {
+        "constant": false,
+        "inputs": [
+          {
+            "internalType": "address",
+            "name": "sender",
+            "type": "address"
+          }
+        ],
+        "name": "initialize",
+        "outputs": [],
+        "payable": false,
+        "stateMutability": "nonpayable",
+        "type": "function"
+      },
+      {
+        "constant": true,
+        "inputs": [],
+        "name": "isOwner",
+        "outputs": [
+          {
+            "internalType": "bool",
+            "name": "",
+            "type": "bool"
+          }
+        ],
+        "payable": false,
+        "stateMutability": "view",
+        "type": "function"
+      },
+      {
+        "constant": true,
         "inputs": [],
         "name": "owner",
         "outputs": [
@@ -117,16 +196,70 @@
             "type": "address"
           }
         ],
+        "payable": false,
         "stateMutability": "view",
         "type": "function"
       },
       {
+        "constant": true,
         "inputs": [
           {
-            "internalType": "bytes32",
-            "name": "_puid",
-            "type": "bytes32"
-          },
+            "internalType": "address",
+            "name": "",
+            "type": "address"
+          }
+        ],
+        "name": "pFactoryToId",
+        "outputs": [
+          {
+            "internalType": "uint256",
+            "name": "",
+            "type": "uint256"
+          }
+        ],
+        "payable": false,
+        "stateMutability": "view",
+        "type": "function"
+      },
+      {
+        "constant": true,
+        "inputs": [
+          {
+            "internalType": "string",
+            "name": "",
+            "type": "string"
+          }
+        ],
+        "name": "pNameToId",
+        "outputs": [
+          {
+            "internalType": "uint256",
+            "name": "",
+            "type": "uint256"
+          }
+        ],
+        "payable": false,
+        "stateMutability": "view",
+        "type": "function"
+      },
+      {
+        "constant": true,
+        "inputs": [],
+        "name": "projectsCount",
+        "outputs": [
+          {
+            "internalType": "uint256",
+            "name": "",
+            "type": "uint256"
+          }
+        ],
+        "payable": false,
+        "stateMutability": "view",
+        "type": "function"
+      },
+      {
+        "constant": false,
+        "inputs": [
           {
             "internalType": "string",
             "name": "_name",
@@ -139,18 +272,43 @@
           }
         ],
         "name": "registProject",
-        "outputs": [],
+        "outputs": [
+          {
+            "internalType": "uint256",
+            "name": "",
+            "type": "uint256"
+          }
+        ],
+        "payable": false,
         "stateMutability": "nonpayable",
         "type": "function"
       },
       {
+        "constant": false,
         "inputs": [],
         "name": "renounceOwnership",
         "outputs": [],
+        "payable": false,
         "stateMutability": "nonpayable",
         "type": "function"
       },
       {
+        "constant": true,
+        "inputs": [],
+        "name": "sintan1071devTESTrealFactoryAddr",
+        "outputs": [
+          {
+            "internalType": "address",
+            "name": "",
+            "type": "address"
+          }
+        ],
+        "payable": false,
+        "stateMutability": "view",
+        "type": "function"
+      },
+      {
+        "constant": false,
         "inputs": [
           {
             "internalType": "address",
@@ -160,56 +318,37 @@
         ],
         "name": "transferOwnership",
         "outputs": [],
+        "payable": false,
         "stateMutability": "nonpayable",
         "type": "function"
       },
       {
+        "constant": false,
         "inputs": [
           {
-            "internalType": "bytes32",
+            "internalType": "uint256",
             "name": "_puid",
-            "type": "bytes32"
+            "type": "uint256"
           },
           {
             "internalType": "string",
             "name": "_name",
             "type": "string"
-          },
-          {
-            "internalType": "address",
-            "name": "_factory",
-            "type": "address"
           }
         ],
-        "name": "updateProjectInfoByID",
+        "name": "updateProjectNameByID",
         "outputs": [],
+        "payable": false,
         "stateMutability": "nonpayable",
         "type": "function"
       },
       {
+        "constant": false,
         "inputs": [
           {
-            "internalType": "bytes32",
+            "internalType": "uint256",
             "name": "_puid",
-            "type": "bytes32"
-          },
-          {
-            "internalType": "address",
-            "name": "_user",
-            "type": "address"
-          }
-        ],
-        "name": "userJoinProject",
-        "outputs": [],
-        "stateMutability": "nonpayable",
-        "type": "function"
-      },
-      {
-        "inputs": [
-          {
-            "internalType": "bytes32",
-            "name": "_puid",
-            "type": "bytes32"
+            "type": "uint256"
           },
           {
             "internalType": "address[]",
@@ -219,6 +358,7 @@
         ],
         "name": "usersJoinProject",
         "outputs": [],
+        "payable": false,
         "stateMutability": "nonpayable",
         "type": "function"
       }
