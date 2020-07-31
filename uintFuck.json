@@ -1,0 +1,35 @@
+{
+    "abi":[
+        {
+            "constant": true,
+            "inputs": [],
+            "name": "test",
+            "outputs": [
+                {
+                    "internalType": "uint256",
+                    "name": "",
+                    "type": "uint256"
+                }
+            ],
+            "payable": false,
+            "stateMutability": "view",
+            "type": "function"
+        },
+        {
+            "constant": true,
+            "inputs": [],
+            "name": "testFunc",
+            "outputs": [
+                {
+                    "internalType": "uint256",
+                    "name": "",
+                    "type": "uint256"
+                }
+            ],
+            "payable": false,
+            "stateMutability": "view",
+            "type": "function"
+        }
+    ],
+    "bin":"608060405234801561001057600080fd5b5060bc8061001f6000396000f3fe6080604052348015600f57600080fd5b506004361060325760003560e01c8063037a417c146037578063f8a8fd6d146053575b600080fd5b603d606f565b6040518082815260200191505060405180910390f35b60596081565b6040518082815260200191505060405180910390f35b60008060016000540390508091505090565b6000548156fea265627a7a723158201e3772bb58672c93c40669283b152cd7881f545c54a610eea2dc4b8fc1671b1464736f6c63430005110032"
+}

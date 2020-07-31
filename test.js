@@ -25,6 +25,8 @@ const sidv3 = require('./TreeBox/StandardIDType_V3.json');
 
 const tb = require('./TreeBox/TreeBox.json');
 
+const uintFuck = require('./uintFuck.json');
+
 const addr0 = '0x0000000000000000000000000000000000000000';
 const addr1 = '0x0000000000000000000000000000000000000001';
 const addr2 = '0x0000000000000000000000000000000000000002';
@@ -53,10 +55,11 @@ async function unlock() {
     await web3.eth.personal.unlockAccount(_from, _pass, 999999999)
 }
 
-async function deploy(contractJson) {
+async function deploy(contractJson, ...params) {
     var contractInst = new web3.eth.Contract(contractJson.abi);
     var address = await contractInst.deploy({
-        data: '0x' + contractJson.bin
+        data: '0x' + contractJson.bin,
+        arguments: !!params?params:undefined
     })
     .send({
         from: _from,
@@ -190,7 +193,7 @@ unlock().then(()=> {
 
 // 测试大型oz项目的TreeBox
 // TreeBoxUnitTest()
-TreeBoxTest()
+// TreeBoxTest()
 
 // 测试合约之间互相调用的原子性
 // ContractsCallsTest()
@@ -200,6 +203,10 @@ TreeBoxTest()
 
 // 测试require的返回报错信息
 // RequireErrorTest()
+
+// 测试uint溢出
+// deploy(uintFuck);
+call('0x4B8e85812BB2F8c88830406F42a63D5897d72765',uintFuck,'testFunc')
 /******************************************↑↑↑测试区域↑↑↑*****************************************************/
 })
 
@@ -266,7 +273,8 @@ async function TreeBoxTest() {
     //         );
 
     // 测试可升级的通过代理合约调用其他合约的msgSender是代理合约还是实例合约
-    // console.log('sintan1071 dev --- funcSig: ', web3.utils.keccak256('initialize(address,address,address)'));
+    console.log('sintan1071 dev --- funcSig: ', web3.utils.keccak256('initialize(uint,address,address,address)'));
+    console.log('sintan1071 dev --- funcSig: ', web3.utils.keccak256('initialize(uint256,address,address,address)'));
 
     // await send('0xd04f7E43A3772326013e66543df90279343f660a', abContractJson,
     //     'initialize',
@@ -275,39 +283,49 @@ async function TreeBoxTest() {
     //     addr0
     // );
 
+    await send('0xd04f7E43A3772326013e66543df90279343f660a', tb,
+        'initialize',
+        23,
+        addr1,
+        addr2,
+        addr0
+    );
+
     // await send('0x59f7636fa67e07fb347f6b6073f55f3822b82145', sid,
     //     'initialize'
     // );
 
-    await send('0x41611df22e0072d1e23662f6ae1bd6507b10213e', abContractJson,
-                'addManager',
-                [addr1]
-            );
+    /**这下面是一整套**/
+    // await send('0x41611df22e0072d1e23662f6ae1bd6507b10213e', abContractJson,
+    //             'addManager',
+    //             [addr1]
+    //         );
 
-    await call('0x41611df22e0072d1e23662f6ae1bd6507b10213e', abContractJson,
-                'owner' // 这个应该是工厂
-            );
+    // await call('0x41611df22e0072d1e23662f6ae1bd6507b10213e', abContractJson,
+    //             'owner' // 这个应该是工厂
+    //         );
 
-    // 验证project的值
-    await call('0x41611df22e0072d1e23662f6ae1bd6507b10213e', abContractJson,
-                'userActions',
-                0
-            );
+    // // 验证project的值
+    // await call('0x41611df22e0072d1e23662f6ae1bd6507b10213e', abContractJson,
+    //             'userActions',
+    //             0
+    //         );
 
-    // 验证工厂的值        
-    await call('0xf8d38d754bf39e5997856c1ed89fa1b84ebab31c', abfContractJson,
-                'sintan1071devTESTrealProjectAddr'
-            );  
+    // // 验证工厂的值        
+    // await call('0xf8d38d754bf39e5997856c1ed89fa1b84ebab31c', abfContractJson,
+    //             'sintan1071devTESTrealProjectAddr'
+    //         );  
             
-    // 验证pList的值        
-    await call('0x278d35749b2a4809b3dad029ca1d07c240583d2b', plContractJson,
-                'sintan1071devTESTrealFactoryAddr'
-            );
+    // // 验证pList的值        
+    // await call('0x278d35749b2a4809b3dad029ca1d07c240583d2b', plContractJson,
+    //             'sintan1071devTESTrealFactoryAddr'
+    //         );
             
-    await call('0x278d35749b2a4809b3dad029ca1d07c240583d2b', plContractJson,
-                'getProjectInfoByID',
-                1
-            );  
+    // await call('0x278d35749b2a4809b3dad029ca1d07c240583d2b', plContractJson,
+    //             'getProjectInfoByID',
+    //             1
+    //         );  
+    /**这上面是一整套**/
 }
 
 async function TreeBoxUnitTest() {
